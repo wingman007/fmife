@@ -61,6 +61,7 @@
 						<tr ng-repeat="student in students">
 							<td><a href={{student.url}} target="_blank">{{student.name}}</a></td>
 							<td>
+							<!--
 								<select>
 									<option value="3" disabled ng-selected="student.grade != 3 || student.grade != 4 || student.grade != 5 || student.grade != 6">2 (Слаб)</option>
 									<option value="3" ng-selected="student.grade == 3">3 (Среден)</option>
@@ -68,6 +69,8 @@
 									<option value="5" ng-selected="student.grade == 5">5 (Много добир)</option>
 									<option value="6" ng-selected="student.grade == 6">6 (Отличен)</option>
 								</select>
+							-->
+								<select ng-change="persistGrade(student)" ng-options="item.value as item.description for item in availableGrades" ng-model="student.grade"></select>
 							</td>
 						<tr>
 					</table>

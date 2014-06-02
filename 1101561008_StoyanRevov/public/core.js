@@ -4,6 +4,24 @@ var fmiFe = angular.module('fmiFe', []);
 
 function mainController($scope, $http) {
 	$scope.formData = {};
+	$scope.availableGrades = [
+		{value:2, description:"2 (Слаб)"},
+		{value:3, description:"3 (Среден)"},
+		{value:4, description:"4 (Добир)"},
+		{value:5, description:"5 (Много Добир)"},
+		{value:6, description:"6 (Отличен)"},
+	];
+	
+	//onSelectedGradeChanged
+	$scope.persistGrade = function(student) {
+		$http.post('/api/students/' + student.facNum, student)
+			.success(function(data) {
+				console.log(data);
+			})
+			.error(function(data) {
+				console.log('Error: ' + data);
+			});
+	}
 
 	// when landing on the page, get all students and show them
 	$http.get('/api/students')
@@ -15,28 +33,4 @@ function mainController($scope, $http) {
 			console.log('Error: ' + data);
 		});
 
-	// when submitting the add form, send the text to the node API
-	$scope.createstudent = function() {
-		$http.post('/api/students', $scope.formData)
-			.success(function(data) {
-				$scope.formData = {}; // clear the form so our user is ready to enter another
-				$scope.students = data;
-				console.log(data);
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
-	};
-
-	// delete a student after checking it
-	$scope.deletestudent = function(id) {
-		$http.delete('/api/students/' + id)
-			.success(function(data) {
-				$scope.students = data;
-				console.log(data);
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
-	};
 }

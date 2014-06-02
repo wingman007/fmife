@@ -30,8 +30,8 @@
 	// 2) Mongo model
 	// define model ================= MongoDB will automatically generate an _id for each record that we create also.
 	var student = mongoose.model('Student', {
-		Name : String,
-		Grade: Number
+		facNum : String,
+		grade: Number
 	});
 	
 	// 3) routes ======================================================================
@@ -47,19 +47,27 @@
 				httpsResponse.on('data', function (chunk) {
 					data += chunk;
 				});
+				
 				httpsResponse.on('end', function (chunk) {
+					var lock = 0;
 					JSON.parse(data).forEach( function(folder) {
-						var folderName = /^\d{10}_([A-Za-z]+)$/.exec(folder.name);
-						if (!!folderName) {
-							result[result.length] = {
-														name : folderName[1],
-														url  : folder.html_url,
-														grade: 6
-													};
-							
+					
+						var folderName = /^(\d{10})_([A-Za-z]+)$/.exec(folder.name);
+						if (folderName) {
+							lock++;console.log(lock);
+							student.findOne({'facNum': folderName[1]}, 'grade', function(err, queryResult) {
+									result[result.length] = {
+													name : folderName[2],
+													facNum : folderName[1],
+													url  : folder.html_url,
+													grade: err ? null : queryResult.grade
+												};
+									lock--;
+							});
 						}
 					});
 					
+					while(lock != 0) {}
 					res.send(result);
 				});
 				
@@ -71,7 +79,7 @@
 	// --------------------- Start Extra Update --------------------------
 	app.get('/api/students/:student_id', function(req, res) {
 
-		student.findOne({_id: req.params.student_id}, '_id text done', function(err, student) {
+		student.findOne({_id: req.params.student_id}, '_id facNum grade', function(err, student) {
 
 			if (err)
 				res.send(err)
@@ -81,38 +89,19 @@
 	});
 	// ----------------------- End Extra Update --------------------------
 	
-	// create student and send back all students after creation
-	app.post('/api/students', function(req, res) {
-
-		student.create({
-			text : req.body.text,
-			done : false
-		}, function(err, student) {
-			if (err)
-				res.send(err);
-
-			student.find(function(err, students) {
+	// create/update student's grade
+	app.post('/api/students/:facNum', function(req, res) {
+		student.update({facNum: req.params.facNum},
+			{facNum: req.params.facNum, grade: req.body.grade},
+			{upsert: true},
+			function (err) {
 				if (err)
-					res.send(err)
-				res.json(students);
-			});
-		});
+					console.log(err);
+				else
+					res.send(req.body.grade);
+			}
+		);
 
-	});
-
-	app.delete('/api/students/:student_id', function(req, res) {
-		student.remove({
-			_id : req.params.student_id
-		}, function(err, student) {
-			if (err)
-				res.send(err);
-
-			student.find(function(err, students) {
-				if (err)
-					res.send(err)
-				res.json(students);
-			});
-		});
 	});
 	
 	
