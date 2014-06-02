@@ -5,10 +5,10 @@ var fmiFe = angular.module('fmiFe', []);
 function mainController($scope, $http) {
 	$scope.formData = {};
 
-	// when landing on the page, get all todos and show them
-	$http.get('/api/todos')
+	// when landing on the page, get all students and show them
+	$http.get('/api/students')
 		.success(function(data) {
-			$scope.todos = data;
+			$scope.students = data;
 			console.log(data);
 		})
 		.error(function(data) {
@@ -16,11 +16,11 @@ function mainController($scope, $http) {
 		});
 
 	// when submitting the add form, send the text to the node API
-	$scope.createTodo = function() {
-		$http.post('/api/todos', $scope.formData)
+	$scope.createstudent = function() {
+		$http.post('/api/students', $scope.formData)
 			.success(function(data) {
 				$scope.formData = {}; // clear the form so our user is ready to enter another
-				$scope.todos = data;
+				$scope.students = data;
 				console.log(data);
 			})
 			.error(function(data) {
@@ -28,11 +28,11 @@ function mainController($scope, $http) {
 			});
 	};
 
-	// delete a todo after checking it
-	$scope.deleteTodo = function(id) {
-		$http.delete('/api/todos/' + id)
+	// delete a student after checking it
+	$scope.deletestudent = function(id) {
+		$http.delete('/api/students/' + id)
 			.success(function(data) {
-				$scope.todos = data;
+				$scope.students = data;
 				console.log(data);
 			})
 			.error(function(data) {
