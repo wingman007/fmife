@@ -43,23 +43,31 @@
 
 			<!-- HEADER AND TODO COUNT -->
 			<div class="jumbotron text-center">
-				<h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+				<h1>The Best PhoneBook ever<span class="label label-info">{{ todos.length }}</span></h1>
 			</div>
-
-			<!-- TODO LIST -->
-			<div id="todo-list" class="row">
-				<div class="col-sm-4 col-sm-offset-4">
-
-					<!-- LOOP OVER THE TODOS IN $scope.todos -->
-					<div class="checkbox" ng-repeat="todo in todos">
-						<label>
-							<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-						</label>
-					</div>
-
-				</div>
-			</div>
-
+			<table id="content-table" class="table table-striped">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>PhoneNumber</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="entry in entries">
+					<td >
+							{{ entry.Fname }}
+					</td>
+					<td >
+							{{ entry.Lname }}
+					</td>
+					<td >
+							<input type="checkbox" ng-click="deleteEntry(entry._id)"> {{ entry.Number }}
+					</td>
+				</tr>
+			</tbody>
+			</table>
+			
 			<!-- FORM TO CREATE TODOS -->
 			<div id="todo-form" class="row">
 				<div class="col-sm-8 col-sm-offset-2 text-center">
@@ -67,11 +75,13 @@
 						<div class="form-group">
 
 							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.Fname">
+							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.Lname">
+							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.Number">
 						</div>
 
 						<!-- createToDo() WILL CREATE NEW TODOS -->
-						<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="createEntry()">Add</button>
 					</form>
 				</div>
 			</div>

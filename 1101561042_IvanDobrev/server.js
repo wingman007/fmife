@@ -18,84 +18,90 @@
 	});
 	
 	// 2) Mongo model
-	// define model ================= That is all we want. Just the text for the todo. MongoDB will automatically generate an _id for each todo that we create also.
-	var Todo = mongoose.model('Todo', {
-		text : String
+	// define model ================= That is all we want. Just the text for the PhoneBook. MongoDB will automatically generate an _id for each PhoneBook that we create also.
+	var PhoneBook = mongoose.model('PhoneBook', {
+		Fname : String,
+		Lname : String,
+		Number : String
 	});
 	
 	// 3) routes ======================================================================
 
 	// api ---------------------------------------------------------------------
-	// get all todos
-	app.get('/api/todos', function(req, res) {
+	// get all PhoneBooks
+	app.get('/api/phoneBook', function(req, res) {
 
-		// use mongoose to get all todos in the database
-		Todo.find(function(err, todos) {
+		// use mongoose to get all PhoneBooks in the database
+		PhoneBook.find(function(err, PhoneBooks) {
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
 
-			res.json(todos); // return all todos in JSON format
+			res.json(PhoneBooks); // return all PhoneBooks in JSON format
 		});
 	});
 
 	// --------------------- Start Extra Update --------------------------
-	app.get('/api/todos/:todo_id', function(req, res) {
+	app.get('/api/phoneBook/:PhoneBook_id', function(req, res) {
 
-		// use mongoose to get all todos in the database
-		Todo.findOne({_id: req.params.todo_id}, '_id text done', function(err, todo) {
+		// use mongoose to get all PhoneBooks in the database
+		PhoneBook.findOne({_id: req.params.PhoneBook_id}, '_id text done', function(err, PhoneBook) {
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
 
-			res.json(todo); // return all todos in JSON format
+			res.json(PhoneBook); // return all PhoneBooks in JSON format
 		});
 	});
 	// ----------------------- End Extra Update --------------------------
 	
-	// create todo and send back all todos after creation
-	app.post('/api/todos', function(req, res) {
+	// create PhoneBook and send back all PhoneBooks after creation
+	app.post('/api/phoneBook', function(req, res) {
 
-		// create a todo, information comes from AJAX request from Angular
-		Todo.create({
-			text : req.body.text,
-			done : false
-		}, function(err, todo) {
-			if (err)
+		// create a PhoneBook, information comes from AJAX request from Angular
+		PhoneBook.create({
+			Fname : req.body.Fname,
+			Lname : req.body.Lname,
+			Number : req.body.PhoneNumber
+		}, function(err, rows){
+			if (err){
 				res.send(err);
-
-			// get and return all the todos after you create another
-			Todo.find(function(err, todos) {
-				if (err)
-					res.send(err)
-				res.json(todos);
+			}
+			//console.log(rows);
+			rows.find(function(err, PhoneBooks){
+				if (err){
+					res.send(err);
+				}
+				res.json(PhoneBooks);
 			});
 		});
 	});
 
-	// delete a todo
-	app.delete('/api/todos/:todo_id', function(req, res) {
-		Todo.remove({
-			_id : req.params.todo_id
-		}, function(err, todo) {
+	// delete a PhoneBook
+	app.delete('/api/phoneBook/:PhoneBook_id', function(req, res) {
+	//req.params = contains the parameters in the url(request);
+		console.log(req.params.PhoneBook_id);
+		/*PhoneBook.remove({
+			_id : req.params.PhoneBook_id
+		}, function(err, PhoneBook) {
 			if (err)
 				res.send(err);
 
-			// get and return all the todos after you create another
-			Todo.find(function(err, todos) {
+			// get and return all the PhoneBooks after you create another
+			PhoneBook.find(function(err, PhoneBooks) {
 				if (err)
 					res.send(err)
-				res.json(todos);
+				res.json(PhoneBooks);
 			});
-		});
+		});*/
 	});
 	// Even without it works	
 	// application -------------------------------------------------------------
-	app.get('*', function(req, res) {
+	/*app.get('*', function(req, res) {
 		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
-	});
+	});*/
 	
 	// listen (start app with node server.js) ======================================
 	app.listen(8081);
