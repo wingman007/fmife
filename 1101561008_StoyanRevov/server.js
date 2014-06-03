@@ -20,7 +20,7 @@
 	var githubOptions = {
 						  host: 'api.github.com',
 						  port: 443,
-						  path: '/repos/revov/fmife/contents',
+						  path: '/repos/wingman007/fmife/contents',
 						  method: 'GET',
 						  headers: 	{
 										"user-agent": "node.js"
@@ -51,10 +51,10 @@
 				httpsResponse.on('end', function (chunk) {
 					JSON.parse(data).forEach( function(folder) {
 					
-						var folderName = /^(\d{10})_([A-Za-z]+)$/.exec(folder.name);
+						var folderName = /^(\d{10})_([A-Za-z]+)([A-Z][a-z]+)$/.exec(folder.name);
 						if (folderName) {
 							result[result.length] = {
-														name : folderName[2],
+														name : folderName[2] + " " + folderName[3],
 														facNum : folderName[1],
 														url  : folder.html_url,
 														grade: null
@@ -84,31 +84,17 @@
 		});
 		req.end();
 	});
-
-	// --------------------- Start Extra Update --------------------------
-	app.get('/api/students/:student_id', function(req, res) {
-
-		student.findOne({_id: req.params.student_id}, '_id facNum grade', function(err, student) {
-
-			if (err)
-				res.send(err)
-
-			res.json(student);
-		});
-	});
-	// ----------------------- End Extra Update --------------------------
 	
 	// create/update student's grade
 	app.post('/api/students/:facNum', function(req, res) {
 		student.update({facNum: req.params.facNum},
 			{facNum: req.params.facNum, grade: req.body.grade},
 			{upsert: true},
-			function (err) {
+			function (err, queryResult) {
 				if (err) {
-					console.log(err);
 					res.send({
 						success: false,
-						message : "Възникна грешка при записване на оценката на " + req.params.facNum
+						message : "Възникна грешка при записване на оценката на " + req.params.facNum + ". Моля ПРЕЗАРЕДЕТЕ страницата!"
 					});
 				} else {
 					res.send({
