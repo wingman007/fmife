@@ -49,26 +49,35 @@
 				});
 				
 				httpsResponse.on('end', function (chunk) {
-					var lock = 0;
 					JSON.parse(data).forEach( function(folder) {
 					
 						var folderName = /^(\d{10})_([A-Za-z]+)$/.exec(folder.name);
 						if (folderName) {
-							lock++;console.log(lock);
-							student.findOne({'facNum': folderName[1]}, 'grade', function(err, queryResult) {
-									result[result.length] = {
-													name : folderName[2],
-													facNum : folderName[1],
-													url  : folder.html_url,
-													grade: err ? null : queryResult.grade
-												};
-									lock--;
-							});
+							result[result.length] = {
+														name : folderName[2],
+														facNum : folderName[1],
+														url  : folder.html_url,
+														grade: null
+													};
 						}
 					});
 					
-					while(lock != 0) {}
-					res.send(result);
+					student.find({}, 'facNum grade', function(err, queryResult) {
+						if(err) {
+							res.send([]);
+						} else {
+							result.forEach( function(resultItem) {
+								queryResult.forEach( function(queryItem) {
+									if(resultItem.facNum == queryItem.facNum) {
+										resultItem.grade = queryItem.grade;
+									}
+								});
+							});
+							
+							res.send(result);
+						}
+					});
+					
 				});
 				
 			}
@@ -95,10 +104,18 @@
 			{facNum: req.params.facNum, grade: req.body.grade},
 			{upsert: true},
 			function (err) {
-				if (err)
+				if (err) {
 					console.log(err);
-				else
-					res.send(req.body.grade);
+					res.send({
+						success: false,
+						message : "Възникна грешка при записване на оценката на " + req.params.facNum
+					});
+				} else {
+					res.send({
+						success: true,
+						message : "Записахте успешно оценка " + req.body.grade + " на студент с фак.№:" + req.params.facNum
+					});
+				}
 			}
 		);
 

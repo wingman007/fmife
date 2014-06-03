@@ -15,11 +15,16 @@ function mainController($scope, $http) {
 	//onSelectedGradeChanged
 	$scope.persistGrade = function(student) {
 		$http.post('/api/students/' + student.facNum, student)
-			.success(function(data) {
-				console.log(data);
+			.success(function(result) {
+				console.log(result);
+				if(result.success == true) { $scope.alertClass = "alert-success";}
+				else {$scope.alertClass = "alert-error";}
+				$scope.alertMessage = result.message;
 			})
-			.error(function(data) {
-				console.log('Error: ' + data);
+			.error(function(result) {
+				console.log('Error: ' + result);
+				$scope.alertClass = "alert-error";
+				$scope.alertMessage = "Възникна грешка при опит за записване на оценката на " + student.name;
 			});
 	}
 
