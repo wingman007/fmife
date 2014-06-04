@@ -22,26 +22,38 @@ function mainController($scope, $http) {
 
 	// when submitting the add form, send the text to the node API
 	$scope.createEntry = function() {
-		$http.post('/api/phoneBook', $scope.formData)
-			.success(function(data) {
-				$scope.formData = {}; // clear the form so our user is ready to enter another
-				$scope.entries = data;
-				console.log(data);
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
+		if (Object.keys($scope.formData).length == 3){
+			var match = $scope.formData.Number.match(/\d{10}\d+/)
+			if (match != null){
+				if (confirm('An entry:  "' + $scope.formData.Lname + '/' + $scope.formData.Lname + '/' + $scope.formData.Number + '" is going to be added to the database.\n Are you sure you want to add it?')){
+					$http.post('/api/phoneBook', $scope.formData)
+						.success(function(data) {
+							$scope.formData = {}; // clear the form so our user is ready to enter another
+							$scope.entries = data;
+							console.log(data);
+						})
+						.error(function(data) {
+							console.log('Error: ' + data);
+						});			
+				}
+			}else {
+				alert('Please enter a valid phonenumber that is 10 digits or more');
+			}
+		}
+	
 	};
 
 	// delete a todo after checking it
 	$scope.deleteEntry = function(id) {
-		$http.delete('/api/phoneBook/'+ id)
-			.success(function(data) {
-				$scope.entries = data;
-				console.log(data);
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
+		if (confirm('Are you sure you want to delete that entry?')){
+			$http.delete('/api/phoneBook/'+ id)
+				.success(function(data) {
+					$scope.entries = data;
+					console.log(data);
+				})
+				.error(function(data) {
+					console.log('Error: ' + data);
+				});
+		}
 	};
 }

@@ -43,7 +43,7 @@
 	});
 
 	// --------------------- Start Extra Update --------------------------
-	app.get('/api/phoneBook/:PhoneBook_id', function(req, res) {
+	/*app.get('/api/phoneBook/:PhoneBook_id', function(req, res) {
 
 		// use mongoose to get all PhoneBooks in the database
 		PhoneBook.findOne({_id: req.params.PhoneBook_id}, '_id text done', function(err, PhoneBook) {
@@ -54,27 +54,32 @@
 
 			res.json(PhoneBook); // return all PhoneBooks in JSON format
 		});
-	});
+	});*/
 	// ----------------------- End Extra Update --------------------------
 	
 	// create PhoneBook and send back all PhoneBooks after creation
 	app.post('/api/phoneBook', function(req, res) {
 
 		// create a PhoneBook, information comes from AJAX request from Angular
+		//console.log(req.body);
+		
 		PhoneBook.create({
 			Fname : req.body.Fname,
 			Lname : req.body.Lname,
-			Number : req.body.PhoneNumber
-		}, function(err, rows){
+			Number : req.body.Number
+		}, function(err, addedRow){
 			if (err){
 				res.send(err);
 			}
-			//console.log(rows);
-			rows.find(function(err, PhoneBooks){
+			console.log('Row added: \n' + addedRow);
+			//find accepts a function as a callback function with which it retunrs the entries found with a json format
+			//we are searching through the object PhoneBook(our connection with the database) to find the current entries and send them as json.
+			PhoneBook.find(function(err, entries){
 				if (err){
 					res.send(err);
 				}
-				res.json(PhoneBooks);
+				//console.log(entries);
+				res.json(entries);
 			});
 		});
 	});
@@ -83,6 +88,23 @@
 	app.delete('/api/phoneBook/:PhoneBook_id', function(req, res) {
 	//req.params = contains the parameters in the url(request);
 		console.log(req.params.PhoneBook_id);
+		
+		PhoneBook.remove({_id: req.params.PhoneBook_id}, 
+			function(err, rowsDeleted){
+				if (err){
+					console.log('rowsDeleted \n' + rowsDeleted);
+					res.send(err);
+				}
+				PhoneBook.find(function(err, entries){
+					if (err){
+						res.send(err);
+					}
+					//console.log(entries);
+					res.json(entries);
+				});
+			}
+		);
+		
 		/*PhoneBook.remove({
 			_id : req.params.PhoneBook_id
 		}, function(err, PhoneBook) {

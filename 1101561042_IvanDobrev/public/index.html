@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="urf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
-		<title>Angular SPA</title>
+		<title>Awsome PhoneBook</title>
 
 		<!-- We have to install AngulaJS in this page -->
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
@@ -35,9 +35,23 @@
 		<!-- app.js needs to be included before maincontroller.js -->
 		<script type="text/javascript" src="core.js"></script>
 		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+		
+		<style>
+			.form-control{
+				width: 200px;
+				float:left;
+			}
+			#footer {
+				margin-top: 100px;
+				color:gray;
+				position:fixed;
+				bottom:0px;
+				left:10px;
+			}
+		</style>
+		
 	</head>
-
-<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+	<!-- SET THE CONTROLLER AND GET ALL TODOS -->
 	<body ng-controller="mainController">
 		<div class="container">
 
@@ -62,7 +76,10 @@
 							{{ entry.Lname }}
 					</td>
 					<td >
-							<input type="checkbox" ng-click="deleteEntry(entry._id)"> {{ entry.Number }}
+							{{ entry.Number }} 
+					</td>
+					<td>
+						<input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="delete" />
 					</td>
 				</tr>
 			</tbody>
@@ -75,9 +92,9 @@
 						<div class="form-group">
 
 							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.Fname">
-							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.Lname">
-							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.Number">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="first name" ng-model="formData.Fname">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="last name" ng-model="formData.Lname">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="phone number" ng-model="formData.Number">
 						</div>
 
 						<!-- createToDo() WILL CREATE NEW TODOS -->
@@ -87,5 +104,8 @@
 			</div>
 
 		</div>
+		<footer id="footer">
+			<div class="muted credit"> Created by Ivan Dobrev <br> Faculty number: 1101561042</div>
+		</footer>
 	</body>
 </html>
