@@ -1,0 +1,11 @@
+.form-control{
+				width: 205px;
+				float:left;
+			}
+#footer {
+	margin-top: 90px;
+	color:#FF0000;
+	position:fixed;
+	bottom:0px;
+	left:10px;
+}
