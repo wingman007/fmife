@@ -4,78 +4,96 @@
 	<head>
 		<meta charset="urf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
-		<title>Angular SPA</title>
-
-		<!-- We have to install AngulaJS in this page -->
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		<title>Phonebook</title>
 		
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		
-		<!-- SCROLLS -->
-		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-		<style type="text/css">
-			html 					{ overflow-y:scroll; }
-			body 					{ padding-top:50px; }
-			#todo-list 				{ margin-bottom:30px; }
-		</style>
-		
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-
+		<link rel="stylesheet" href="custom.css">
+		<link rel="stylesheet" href="//silviomoreto.github.io/bootstrap-select/stylesheets/bootstrap-select.css">				
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 		
-		<!-- SPELLS -->
-		<!-- Custom code -->
-		<!-- app.js needs to be included before maincontroller.js -->
-		<script type="text/javascript" src="core.js"></script>
-		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+		
 	</head>
-
-<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+	<!-- SET THE CONTROLLER AND GET ALL ENTRIES -->
 	<body ng-controller="mainController">
-		<div class="container">
+		<section class="container">
 
-			<!-- HEADER AND TODO COUNT -->
-			<div class="jumbotron text-center">
-				<h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
-			</div>
-
-			<!-- TODO LIST -->
-			<div id="todo-list" class="row">
-				<div class="col-sm-4 col-sm-offset-4">
-
-					<!-- LOOP OVER THE TODOS IN $scope.todos -->
-					<div class="checkbox" ng-repeat="todo in todos">
-						<label>
-							<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-						</label>
-					</div>
-
-				</div>
-			</div>
-
-			<!-- FORM TO CREATE TODOS -->
-			<div id="todo-form" class="row">
+			<!-- HEADER AND ENTRY COUNT -->
+			<header class="jumbotron text-center">
+				<h1>Simple Phonebook<span class="label label-info">{{ entries.length }}</span></h1>
+			</header>
+			<article>
+				<label>Sorting options</label><br/>
+				<select id="sortField" ng-model="select_value" ng-change="changeField()">
+					<option value="fName">First name</option>
+					<option value="lName">Last name</option>
+				</select>
+				<select id="sortOrder" ng-model="select" ng-change="changePredicate()">
+					<option value="desc">Descending</option>
+					<option value="asc">Ascending</option>
+				</select>
+				<table id="content-table" class="table table-striped">
+					<thead>
+						<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Number</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="entry in entries | orderBy:predicate">
+							<td>
+								<span data-ng-hide="editMode">{{entry.Fname}}</span>
+								<input type="text" data-ng-show="editMode" data-ng-model="entry.Fname" data-ng-required />
+							</td>
+							<td>
+								<span data-ng-hide="editMode">{{entry.Lname}}</span>
+								<input type="text" data-ng-show="editMode" data-ng-model="entry.Lname" data-ng-required />
+							</td>
+							<td>
+								<span data-ng-hide="editMode">{{entry.Number}}</span>
+								<input type="text" data-ng-show="editMode" data-ng-model="entry.Number" data-ng-required />
+							</td>
+							<td>
+								<input type="button" data-ng-hide="editMode" ng-click="editMode = true; editEntry(entry)" class="btn btn-primary" value="Edit"/>
+								<input type="button" data-ng-show="editMode" ng-click="saveEntry(entry)" class="btn btn-success" value="Save"/>
+								<input type="button" data-ng-show="editMode" ng-click="editMode = false; cancel()" class="btn btn-danger" value="Cancel">
+							</td>
+							<td>
+								<input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="Delete" />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</article>
+			<!-- FORM TO CREATE ENTRIES -->
+			<section id="entry-form" class="row">
 				<div class="col-sm-8 col-sm-offset-2 text-center">
 					<form>
 						<div class="form-group">
-
 							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="First Name" ng-model="formData.Fname">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="Last Name" ng-model="formData.Lname">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="Number" ng-model="formData.Number">
 						</div>
 
-						<!-- createToDo() WILL CREATE NEW TODOS -->
-						<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+						<!-- createEntry() WILL CREATE NEW ENTRIES -->
+						<button type="submit" class="btn btn-success btn-lg" ng-click="createEntry()">Add</button>
 					</form>
 				</div>
-			</div>
-
-		</div>
+			</section>
+			<section class="success"></section>
+			<section class="errors"></section>
+		</section>
+		<footer id="footer">
+			<p class="muted">Created by Georgi Kerezov<br/>Faculty number: 1101561009</p>
+		</footer>
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="core.js"></script>
 	</body>
 </html>

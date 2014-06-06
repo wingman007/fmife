@@ -1,9 +1,9 @@
 {
-	"name"         : "georgi-phonebook",
+	"name"         : "node-todo",
 	"version"      : "0.0.0",
-	"description"  : "Simple phonebook application.",
+	"description"  : "Simple todo application.",
 	"main"         : "server.js",
-	"author"       : "Georgi Kerezov",
+	"author"       : "FMI Front End",
 	"dependencies" : {
 		"express"    : "~3.4.4",
 		"mongoose"   : "~3.6.2"
