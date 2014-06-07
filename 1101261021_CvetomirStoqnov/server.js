@@ -33,15 +33,12 @@
 
 		// use mongoose to get all phone numbers in the database
 		PhoneBook.find(function(err, phones) {
-
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
-
 			res.json(phones); // return all phones in JSON format
 		});
 	});
-
 	// --------------------- Start Extra Update --------------------------
 	app.get('/api/phones/:phone_id', function(req, res) {
 
@@ -105,7 +102,6 @@
 	// listen (start app with node server.js) ======================================
 	app.listen(7777);
 	console.log("App listening on port 7777");
-
 /*
 http://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
 Model.findOne({ name: 'borne' }, function (err, doc) {
