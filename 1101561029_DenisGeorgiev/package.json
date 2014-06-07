@@ -1,7 +1,7 @@
 {
-	"name"         : "node-todo",
+	"name"         : "node-phonebook",
 	"version"      : "0.0.0",
-	"description"  : "Simple todo application.",
+	"description"  : "Simple phonebook application.",
 	"main"         : "server.js",
 	"author"       : "FMI Front End",
 	"dependencies" : {
