@@ -28,11 +28,11 @@ $(window).resize(function () {
 		targetIds[i] = visiblePopovers[i].id;
 	}
 	for(var i = 0; i < number; i++) {
-		$("a#" + targetIds[i]).click();
+		$("a[name=" + targetIds[i] + "]").click();
 	}
     waitForResize(function(){
 		for(var i = 0; i < number; i++) {
-			$("a#" + targetIds[i]).click();
+			$("a[name=" + targetIds[i] + "]").click();
 		}
     }, 500, "default unique string");
 });
