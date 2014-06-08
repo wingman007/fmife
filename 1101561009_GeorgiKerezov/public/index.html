@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="//silviomoreto.github.io/bootstrap-select/stylesheets/bootstrap-select.css">				
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-		
+		<link rel="icon" type="image/png" href="img/phonebook.png">
 		
 	</head>
 	<!-- SET THE CONTROLLER AND GET ALL ENTRIES -->
@@ -20,18 +20,52 @@
 
 			<!-- HEADER AND ENTRY COUNT -->
 			<header class="jumbotron text-center">
-				<h1>Simple Phonebook<span class="label label-info">{{ entries.length }}</span></h1>
+				<h1>
+					Simple Phonebook
+				</h1>
+				<h2>
+					Number of records <span class="label label-info">{{ entries.length }}</span>
+				</h2>
 			</header>
 			<article>
-				<label>Sorting options</label><br/>
-				<select id="sortField" ng-model="select_value" ng-change="changeField()">
-					<option value="fName">First name</option>
-					<option value="lName">Last name</option>
-				</select>
-				<select id="sortOrder" ng-model="select" ng-change="changePredicate()">
-					<option value="desc">Descending</option>
-					<option value="asc">Ascending</option>
-				</select>
+				<section id="filters">
+					<label>Sorting options</label><button type="button" class="sort-button" ng-click="sort()"><i class='icon-ok-sign'></i>Sort</button><br/>
+					<select id="sortField" ng-model="select_value" ng-change="changeField()">
+						<option disabled="disabled">By name</option>
+						<option value="fName">First name</option>
+						<option value="lName">Last name</option>
+					</select>
+					<select id="sortOrder" ng-model="select" ng-change="changePredicate()">
+						<option disabled="disabled">Type</option>
+						<option value="asc">Ascending</option>
+						<option value="desc">Descending</option>
+					</select>
+					<div class="basicSearch">
+						<span class="advancedSearchText">Search: <input ng-model="searchText" class="searchText"></span>
+					</div>
+					<label for="toggleAdvanced" class="labelForSearch">Advanced search (allows editing)</label>
+					<input type="checkbox" id="toggleAdvanced" ng-click="toggleAdvancedSearch()"/>
+				</section>
+				<div id="advancedSearch" class="form-inline">
+					<hr>
+					<div class="form-group">
+						<label class="sr-only" for="firstNameSearch">First name</label>
+						<input id="firstNameSearch" type="text" class="form-control" placeholder="First name only" ng-model="search.Fname">
+					</div>
+					<div class="form-group">
+						<label class="sr-only" for="lastNameSearch">Last name</label>
+						<input id="lastNameSearch" type="text" class="form-control" placeholder="Last name only" ng-model="search.Lname">
+					</div>
+					<div class="form-group ">
+						<label class="sr-only" for="phoneSearch">Number</label>
+						<input id="phoneSearch" type="text" class="form-control" placeholder="Phone only" ng-model="search.Number">
+					</div>
+					<div class="checkbox">
+						<label>
+							<input id="exactMatch" type="checkbox" ng-model="strict" /><span class="exactMatchText">Exact match</span>
+						</label>
+					</div>
+				</div>
 				<table id="content-table" class="table table-striped">
 					<thead>
 						<tr>
@@ -41,7 +75,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="entry in entries | orderBy:predicate">
+						<tr ng-repeat="entry in entries | filter:searchText | filter:search:strict | pagination: curPage * pageSize | limitTo: pageSize" bs-popover>
 							<td>
 								<span data-ng-hide="editMode">{{entry.Fname}}</span>
 								<input type="text" data-ng-show="editMode" data-ng-model="entry.Fname" data-ng-required />
@@ -60,11 +94,27 @@
 								<input type="button" data-ng-show="editMode" ng-click="editMode = false; cancel()" class="btn btn-danger" value="Cancel">
 							</td>
 							<td>
-								<input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="Delete" />
+								<div class="bs-docs-example">
+									<a id='{{entry._id}}' class="btn btn-large btn-danger" rel="popover" data-content="<div id='{{entry._id}}' class='popover fade top in counter' style='display: inline;'><div class='popover-content text-center'><div class='btn-group'><a id={{entry._id}} class='btn btn-small btn-success popOver-yes'><i class='icon-ok-sign icon-white'></i> Yes</a><a class='btn btn-small btn-danger popOver-no'><i class='icon-remove-sign icon-white'></i> No</a></div></div></div>">Delete</a>
+								</div>
 							</td>
 						</tr>
+						
 					</tbody>
 				</table>
+				<div class="pagination" ng-show="entries.length">
+					<ul class="pagination-control pagination">
+						<li>
+							<button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; PREV</button>
+						</li>
+						<li>
+							<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+						</li>
+						<li>
+							<button type="button" class="btn btn-primary" ng-disabled="curPage >= entries.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+						</li>
+					</ul>
+				</div>
 			</article>
 			<!-- FORM TO CREATE ENTRIES -->
 			<section id="entry-form" class="row">
