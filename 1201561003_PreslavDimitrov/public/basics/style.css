@@ -1,0 +1,15 @@
+.done-true {
+	text-decoration: line-through;
+	color: grey;
+}
+body {
+  height: 100%;
+  background-color: #66FFFF;
+}
+
+.jumbotron{
+  text-align:center;
+  color:rgb(192,192,192);
+ }
+ 
+ 
