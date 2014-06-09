@@ -9,35 +9,8 @@ $(document).ready(function() {
 	$('#sortOrder').val('Type');
 });
 
-var waitForResize = (function () {
-	var timers = {};
-	return function (callback, ms, uniqueId) {
-		if (!uniqueId) {
-		uniqueId = "Don't call this twice without a uniqueId";
-		}
-		if (timers[uniqueId]) {
-		clearTimeout (timers[uniqueId]);
-		}
-		timers[uniqueId] = setTimeout(callback, ms);
-	};
-})();
-
 $(window).resize(function () {
-	var targetIds = [];
-	var visiblePopovers = $(".counter").filter(':visible');
-	var number = visiblePopovers.length;
-	var i = 0;
-	for(i = 0; i < number; i++) {
-		targetIds[i] = visiblePopovers[i].id;
-	}
-	for(i = 0; i < number; i++) {
-		$("a[name=" + targetIds[i] + "]").click();
-	}
-    waitForResize(function(){
-		for(i = 0; i < number; i++) {
-			$("a[name=" + targetIds[i] + "]").click();
-		}
-    }, 500, "default unique string");
+	togglePopovers();
 });
 
 var fmiFe = angular.module('fmiFe', []);
@@ -118,8 +91,11 @@ function mainController($scope, $http, orderByFilter) {
 				else {
 					$('.pagination').css('visibility', 'hidden');
 				}
-				if($scope.entries.length % $scope.pageSize == 0) {
+				if($scope.entries.length % $scope.pageSize === 0) {
 					$scope.curPage = $scope.curPage -1;
+				}
+				if($scope.entries.length === 0) {
+					$scope.curPage = 0;
 				}
 				clearSuccess();
 				showSuccess();
@@ -197,6 +173,7 @@ function mainController($scope, $http, orderByFilter) {
 			$('.pagination').css('visibility', 'hidden');
 			$scope.curPage = $scope.curPage - numberPerPageForSearch;
 			$scope.pageSize = numberPerPageForSearch;
+			console.log($scope.curPage);
 			togglePopovers();
 		}
 		else {
@@ -213,6 +190,15 @@ function mainController($scope, $http, orderByFilter) {
 			}
 			if($scope.curPage === 0  && (Math.ceil($scope.entries.length / $scope.pageSize) - 1) === 0) {
 				$('.pagination').css('visibility', 'hidden');
+			}
+			if($scope.curPage < 0) {
+				if($scope.pageSize >= pageSizeDefault) {
+					$scope.curPage += 1;
+				}
+				else {
+					$scope.curPage = 0;
+					$('.pagination').css('visibility', 'hidden');
+				}
 			}
 			togglePopovers();			
 		}

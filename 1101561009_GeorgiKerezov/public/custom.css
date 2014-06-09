@@ -194,22 +194,11 @@ body
 	padding-top: 15px !important;
 	padding-bottom: 15px !important;
 }
-.glyphicon-search
-{
-	padding: 4.5px;
-	-webkit-box-shadow: 2px 2px 2px 2px #ccc, 0 -1px #fff inset;
-    -moz-box-shadow: 2px 2px 2px 2px #ccc, 0 -1px #fff inset;
-    box-shadow: 2px 2px 2px 2px #ccc, 0 -1px #fff inset;
-    background: #f8f8f8;
-    border: none;
-    outline: none;
-    display: inline-block;
-}
 .glyphicon-copyright-mark, .glyphicon-save, .glyphicon-remove, .glyphicon-edit, .glyphicon-sort, .glyphicon-chevron-left
 {
 	margin-right: 5px;
 }
-.glyphicon-chevron-right
+.glyphicon-chevron-right, .glyphicon-search
 {
 	margin-left: 5px;
 }
