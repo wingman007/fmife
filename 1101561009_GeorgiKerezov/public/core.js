@@ -3,35 +3,38 @@
 $(document).ready(function() {
 	$('#toggleAdvanced').prop('checked', false);
 	$('#advancedSearch').fadeOut(0);
-	$('#sortField').val('By name');
+	$('.success').fadeOut(0);
+	$('.errors').fadeOut(0);
+	$('#sortField').val('ByName');
 	$('#sortOrder').val('Type');
 });
 
 var waitForResize = (function () {
-  var timers = {};
-  return function (callback, ms, uniqueId) {
-    if (!uniqueId) {
-      uniqueId = "Don't call this twice without a uniqueId";
-    }
-    if (timers[uniqueId]) {
-      clearTimeout (timers[uniqueId]);
-    }
-    timers[uniqueId] = setTimeout(callback, ms);
-  };
+	var timers = {};
+	return function (callback, ms, uniqueId) {
+		if (!uniqueId) {
+		uniqueId = "Don't call this twice without a uniqueId";
+		}
+		if (timers[uniqueId]) {
+		clearTimeout (timers[uniqueId]);
+		}
+		timers[uniqueId] = setTimeout(callback, ms);
+	};
 })();
 
 $(window).resize(function () {
 	var targetIds = [];
 	var visiblePopovers = $(".counter").filter(':visible');
 	var number = visiblePopovers.length;
-	for(var i = 0; i < number; i++) {
+	var i = 0;
+	for(i = 0; i < number; i++) {
 		targetIds[i] = visiblePopovers[i].id;
 	}
-	for(var i = 0; i < number; i++) {
+	for(i = 0; i < number; i++) {
 		$("a[name=" + targetIds[i] + "]").click();
 	}
     waitForResize(function(){
-		for(var i = 0; i < number; i++) {
+		for(i = 0; i < number; i++) {
 			$("a[name=" + targetIds[i] + "]").click();
 		}
     }, 500, "default unique string");
@@ -68,8 +71,7 @@ function mainController($scope, $http, orderByFilter) {
 	var numberPerPageForSearch = 200;
 	var pageSizeDefault = 5;
 	
-	$http.get('/api/phoneBook')
-		.success(function(data) {
+	$http.get('/api/phoneBook').success(function(data) {
 			$scope.entries = data;
 			if($scope.entries.length > $scope.pageSize) {
 				$('.pagination').css('visibility', 'visible');
@@ -77,17 +79,15 @@ function mainController($scope, $http, orderByFilter) {
 			else {
 				$('.pagination').css('visibility', 'hidden');
 			}
-		})
-		.error(function(data) {
+		}).error(function(data) {
 			console.log('Error: ' + data);
 	});
 	
 	$scope.createEntry = function() {
-		if (Object.keys($scope.formData).length == 3){
+		if (Object.keys($scope.formData).length == 3) {
 			var match = $scope.formData.Number.match(regexForDigitsNormal) || $scope.formData.Number.match(regexForDigitsSpecial);
-			if (match != null){
-				$http.post('/api/phoneBook', $scope.formData)
-					.success(function(data) {
+			if (match !== null){
+				$http.post('/api/phoneBook', $scope.formData).success(function(data) {
 						$scope.formData = {};
 						$scope.entries = data;
 						if($scope.entries.length > $scope.pageSize) {
@@ -96,8 +96,7 @@ function mainController($scope, $http, orderByFilter) {
 						else {
 							$('.pagination').css('visibility', 'hidden');
 						}
-					})
-					.error(function(data) {
+					}).error(function(data) {
 						console.log('Error: ' + data);
 					});
 				clearErrors();
@@ -108,11 +107,10 @@ function mainController($scope, $http, orderByFilter) {
 				showErrors();
 			}
 		}
-	}
+	};
 	
 	$(document).on("click", ".popOver-yes", function() {
-		$http.delete('/api/phoneBook/'+ this.id)
-			.success(function(data) {
+		$http.delete('/api/phoneBook/'+ this.id).success(function(data) {
 				$scope.entries = data;
 				if($scope.entries.length > $scope.pageSize) {
 					$('.pagination').css('visibility', 'visible');
@@ -123,8 +121,9 @@ function mainController($scope, $http, orderByFilter) {
 				if($scope.entries.length % $scope.pageSize == 0) {
 					$scope.curPage = $scope.curPage -1;
 				}
-			})
-			.error(function(data) {
+				clearSuccess();
+				showSuccess();
+			}).error(function(data) {
 				console.log('Error: ' + data);
 			});
 	});
@@ -140,17 +139,15 @@ function mainController($scope, $http, orderByFilter) {
 		if($('#exactMatch').prop('checked', true)) {
 			$('#exactMatch').prop('checked', false);
 		}
-    }
+    };
     
     $scope.saveEntry = function(entry) {
 		var match = entry.Number.match(regexForDigitsNormal) || entry.Number.match(regexForDigitsSpecial);
-		if (match != null){
-            $http.put('/api/phoneBook/'+ entry._id, entry)
-				.success(function(data) {
+		if (match !== null){
+            $http.put('/api/phoneBook/'+ entry._id, entry).success(function(data) {
 					$scope.entries = data;
 					$scope.sort();
-				})
-				.error(function(data) {
+				}).error(function(data) {
 					console.log('Error: ' + data);
 				});
 			editMode = false;
@@ -161,18 +158,16 @@ function mainController($scope, $http, orderByFilter) {
 				clearErrors();
 				showErrors();
 		}
-    }
+    };
     
     $scope.cancel = function() {
-		$http.get('/api/phoneBook')
-			.success(function(data) {
+		$http.get('/api/phoneBook').success(function(data) {
 				$scope.entries = data;
-			})
-			.error(function(data) {
+			}).error(function(data) {
 				console.log('Error: ' + data);
 		});
 		clearErrors();
-    }
+    };
 	
 	$scope.changePredicate = function() {
 		if($('#sortOrder option:selected').val() == "asc") {
@@ -180,7 +175,7 @@ function mainController($scope, $http, orderByFilter) {
 		} else if ($('#sortOrder option:selected').val() == "desc") {
 			$scope.predicate = "-" + $scope.typePredicate;
 		}
-    }
+    };
 	
 	$scope.changeField = function() {
 		if($('#sortField option:selected').val() == "fName") {
@@ -188,10 +183,10 @@ function mainController($scope, $http, orderByFilter) {
 		} else {
 			$scope.typePredicate = "Lname";
 		}
-		if($('#sortOrder').val() != null) {
+		if($('#sortOrder').val() !== null) {
 			$scope.changePredicate();
 		}
-    }
+    };
 	
 	$scope.toggleAdvancedSearch = function() {
 		if($('#toggleAdvanced').is(':checked')) {
@@ -202,6 +197,7 @@ function mainController($scope, $http, orderByFilter) {
 			$('.pagination').css('visibility', 'hidden');
 			$scope.curPage = $scope.curPage - numberPerPageForSearch;
 			$scope.pageSize = numberPerPageForSearch;
+			togglePopovers();
 		}
 		else {
 			$('#advancedSearch').fadeOut(800);
@@ -211,19 +207,25 @@ function mainController($scope, $http, orderByFilter) {
 			$('.basicSearch').fadeIn(800);
 			$('.pagination').css('visibility', 'visible');
 			$scope.curPage = $scope.curPage + numberPerPageForSearch;
-			$scope.pageSize = pageSizeDefault;			
+			$scope.pageSize = pageSizeDefault;
+			if($scope.curPage > Math.ceil($scope.entries.length / $scope.pageSize) - 1) {
+				$scope.curPage = $scope.curPage -1;
+			}
+			if($scope.curPage === 0  && (Math.ceil($scope.entries.length / $scope.pageSize) - 1) === 0) {
+				$('.pagination').css('visibility', 'hidden');
+			}
+			togglePopovers();			
 		}
-	}
+	};
 	
 	$scope.numberOfPages = function() {
 		return Math.ceil($scope.entries.length / $scope.pageSize);
-	}
+	};
 	
 	$('.searchText').focusin( function() {
 			$scope.curPage = $scope.curPage - numberPerPageForSearch;
 			$scope.pageSize = numberPerPageForSearch;
-			$http.get('/api/phoneBook')
-				.success(function(data) {
+			$http.get('/api/phoneBook').success(function(data) {
 					$scope.entries = data;
 					if($scope.entries.length > $scope.pageSize) {
 						$('.pagination').css('visibility', 'visible');
@@ -231,8 +233,7 @@ function mainController($scope, $http, orderByFilter) {
 					else {
 						$('.pagination').css('visibility', 'hidden');
 					}
-				})
-				.error(function(data) {
+				}).error(function(data) {
 					console.log('Error: ' + data);
 			});
 	});
@@ -241,8 +242,7 @@ function mainController($scope, $http, orderByFilter) {
 			$scope.curPage = $scope.curPage + numberPerPageForSearch;
 			$scope.pageSize = pageSizeDefault;
 			$scope.searchText = "";
-			$http.get('/api/phoneBook')
-				.success(function(data) {
+			$http.get('/api/phoneBook').success(function(data) {
 					$scope.entries = data;
 					if($scope.entries.length > $scope.pageSize) {
 						$('.pagination').css('visibility', 'visible');
@@ -250,15 +250,13 @@ function mainController($scope, $http, orderByFilter) {
 					else {
 						$('.pagination').css('visibility', 'hidden');
 					}
-				})
-				.error(function(data) {
+				}).error(function(data) {
 					console.log('Error: ' + data);
 			});
 	});
 	
 	$scope.sort = function() {
-		$http.get('/api/phoneBook')
-			.success(function(data) {
+		$http.get('/api/phoneBook').success(function(data) {
 				$scope.sortedData = orderByFilter(data, $scope.predicate);
 				$scope.entries = $scope.sortedData;
 				if($scope.entries.length > $scope.pageSize) {
@@ -267,12 +265,11 @@ function mainController($scope, $http, orderByFilter) {
 				else {
 					$('.pagination').css('visibility', 'hidden');
 				}
-			})
-			.error(function(data) {
+			}).error(function(data) {
 				console.log('Error: ' + data);
 			});
-	}
-};
+	};
+}
 
 function clearErrors() {
 	$('.errors').css("visibility", "hidden");
@@ -283,7 +280,7 @@ function clearErrors() {
 function showErrors() {
 	$('.errors').css("visibility", "visible");
 	$('.errors').fadeIn(0);
-	$('.errors').append('Please enter a valid phonenumber');
+	$('.errors').append('<i class="glyphicon glyphicon-remove-circle"></i> Please enter a valid phonenumber');
 	
 	setTimeout( function(){
 		$('.errors').fadeOut(1500);
@@ -300,10 +297,17 @@ function clearSuccess() {
 function showSuccess() {
 	$('.success').css("visibility", "visible");
 	$('.success').fadeIn(0);
-	$('.success').append('Success');
+	$('.success').append('<i class="glyphicon glyphicon-saved"></i> Success');
 	
 	setTimeout( function(){
 		$('.success').fadeOut(1200);
 	}
 	, 1200 );
+}
+function togglePopovers() {
+	var visiblePopovers = $(".counter").filter(':visible');
+	var number = visiblePopovers.length;
+	for(var i = 0; i < number; i++) {
+		$("a[name=" + visiblePopovers[i].id + "]").click();
+	}
 }
