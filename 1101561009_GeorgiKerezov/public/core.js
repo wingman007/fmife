@@ -29,29 +29,21 @@ fmiFe.directive('bsPopover', function() {
     };
 });
 
-function mainController($scope, $http, orderByFilter) {
+function mainController($scope, $http, orderByFilter, $filter) {
 	$scope.formData = {};
 	$scope.newField = {};
 	$scope.predicate = '';
 	$scope.typePredicate = '';
-	$scope.search = {};
-	$scope.strict = {};
-	$scope.searchText = "";
+	$scope.queryAdvanced = {};
+	//$scope.strict = {};
+	$scope.query = '';
 	$scope.curPage = 0;
 	$scope.pageSize = 5;
 	var regexForDigitsNormal = /^\d{10}$/;
 	var regexForDigitsSpecial = /^\+\d{10,}$/;
-	var numberPerPageForSearch = 200;
-	var pageSizeDefault = 5;
 	
 	$http.get('/api/phoneBook').success(function(data) {
 			$scope.entries = data;
-			if($scope.entries.length > $scope.pageSize) {
-				$('.pagination').css('visibility', 'visible');
-			}
-			else {
-				$('.pagination').css('visibility', 'hidden');
-			}
 		}).error(function(data) {
 			console.log('Error: ' + data);
 	});
@@ -63,12 +55,7 @@ function mainController($scope, $http, orderByFilter) {
 				$http.post('/api/phoneBook', $scope.formData).success(function(data) {
 						$scope.formData = {};
 						$scope.entries = data;
-						if($scope.entries.length > $scope.pageSize) {
-							$('.pagination').css('visibility', 'visible');
-						}
-						else {
-							$('.pagination').css('visibility', 'hidden');
-						}
+						$scope.query = '';
 					}).error(function(data) {
 						console.log('Error: ' + data);
 					});
@@ -85,16 +72,11 @@ function mainController($scope, $http, orderByFilter) {
 	$(document).on("click", ".popOver-yes", function() {
 		$http.delete('/api/phoneBook/'+ this.id).success(function(data) {
 				$scope.entries = data;
-				if($scope.entries.length > $scope.pageSize) {
-					$('.pagination').css('visibility', 'visible');
-				}
-				else {
-					$('.pagination').css('visibility', 'hidden');
-				}
+				$scope.checkForFilter();
 				if($scope.entries.length % $scope.pageSize === 0) {
-					$scope.curPage = $scope.curPage -1;
+					$scope.curPage -= 1;
 				}
-				if($scope.entries.length === 0) {
+				if($scope.curPage < 0) {
 					$scope.curPage = 0;
 				}
 				clearSuccess();
@@ -108,6 +90,7 @@ function mainController($scope, $http, orderByFilter) {
 		//go back through the nested items until we reach the outer most div
 		//then select its 2-nd child, which is the targeted anchor tag
 		$(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.childNodes[1]).click();
+		
 	});
 	
 	$scope.editEntry = function(field) {
@@ -122,7 +105,7 @@ function mainController($scope, $http, orderByFilter) {
 		if (match !== null){
             $http.put('/api/phoneBook/'+ entry._id, entry).success(function(data) {
 					$scope.entries = data;
-					$scope.sort();
+					$scope.checkForFilter();
 				}).error(function(data) {
 					console.log('Error: ' + data);
 				});
@@ -139,6 +122,7 @@ function mainController($scope, $http, orderByFilter) {
     $scope.cancel = function() {
 		$http.get('/api/phoneBook').success(function(data) {
 				$scope.entries = data;
+				$scope.checkForFilter();
 			}).error(function(data) {
 				console.log('Error: ' + data);
 		});
@@ -168,39 +152,27 @@ function mainController($scope, $http, orderByFilter) {
 		if($('#toggleAdvanced').is(':checked')) {
 			$('#advancedSearch').css("visibility", "visible");
 			$('#advancedSearch').fadeIn(1000);
-			$scope.searchText = "";
 			$('.basicSearch').fadeOut(800);
-			$('.pagination').css('visibility', 'hidden');
-			$scope.curPage = $scope.curPage - numberPerPageForSearch;
-			$scope.pageSize = numberPerPageForSearch;
-			console.log($scope.curPage);
 			togglePopovers();
+			$http.get('/api/phoneBook').success(function(data) {
+				$scope.entries = data;
+				$scope.curPage = 0;
+				}).error(function(data) {
+					console.log('Error: ' + data);
+			});
 		}
 		else {
 			$('#advancedSearch').fadeOut(800);
 			$('#exactMatch').prop('checked', false);
-			$scope.search = "";
-			$scope.strict = "";	
+			$scope.query = '';
+			$scope.queryAdvanced = '';
 			$('.basicSearch').fadeIn(800);
-			$('.pagination').css('visibility', 'visible');
-			$scope.curPage = $scope.curPage + numberPerPageForSearch;
-			$scope.pageSize = pageSizeDefault;
-			if($scope.curPage > Math.ceil($scope.entries.length / $scope.pageSize) - 1) {
-				$scope.curPage = $scope.curPage -1;
-			}
-			if($scope.curPage === 0  && (Math.ceil($scope.entries.length / $scope.pageSize) - 1) === 0) {
-				$('.pagination').css('visibility', 'hidden');
-			}
-			if($scope.curPage < 0) {
-				if($scope.pageSize >= pageSizeDefault) {
-					$scope.curPage += 1;
-				}
-				else {
-					$scope.curPage = 0;
-					$('.pagination').css('visibility', 'hidden');
-				}
-			}
-			togglePopovers();			
+			togglePopovers();
+			$http.get('/api/phoneBook').success(function(data) {
+				$scope.entries = data;
+				}).error(function(data) {
+					console.log('Error: ' + data);
+			});
 		}
 	};
 	
@@ -208,52 +180,61 @@ function mainController($scope, $http, orderByFilter) {
 		return Math.ceil($scope.entries.length / $scope.pageSize);
 	};
 	
-	$('.searchText').focusin( function() {
-			$scope.curPage = $scope.curPage - numberPerPageForSearch;
-			$scope.pageSize = numberPerPageForSearch;
-			$http.get('/api/phoneBook').success(function(data) {
-					$scope.entries = data;
-					if($scope.entries.length > $scope.pageSize) {
-						$('.pagination').css('visibility', 'visible');
-					}
-					else {
-						$('.pagination').css('visibility', 'hidden');
-					}
-				}).error(function(data) {
-					console.log('Error: ' + data);
-			});
-	});
-	
-	$('.searchText').focusout( function() {
-			$scope.curPage = $scope.curPage + numberPerPageForSearch;
-			$scope.pageSize = pageSizeDefault;
-			$scope.searchText = "";
-			$http.get('/api/phoneBook').success(function(data) {
-					$scope.entries = data;
-					if($scope.entries.length > $scope.pageSize) {
-						$('.pagination').css('visibility', 'visible');
-					}
-					else {
-						$('.pagination').css('visibility', 'hidden');
-					}
-				}).error(function(data) {
-					console.log('Error: ' + data);
-			});
-	});
-	
 	$scope.sort = function() {
 		$http.get('/api/phoneBook').success(function(data) {
 				$scope.sortedData = orderByFilter(data, $scope.predicate);
 				$scope.entries = $scope.sortedData;
-				if($scope.entries.length > $scope.pageSize) {
-					$('.pagination').css('visibility', 'visible');
-				}
-				else {
-					$('.pagination').css('visibility', 'hidden');
+			}).error(function(data) {
+				console.log('Error: ' + data);
+		});
+	};	
+	
+    $scope.search = function() {
+		$http.get('/api/phoneBook').success(function(data) {
+				$scope.entries = data;
+				if($scope.query !== '') {
+					$scope.curPage = 0;
+					$scope.entries = $filter('filter')($scope.entries, {$:$scope.query});
 				}
 			}).error(function(data) {
 				console.log('Error: ' + data);
+		});
+    };
+	
+	$scope.searchAdvanced = function() {
+		if($('#exactMatch').is(':checked')) {
+			$http.get('/api/phoneBook').success(function(data) {
+					$scope.entries = data;
+					if($scope.queryAdvanced !== '') {
+						$scope.curPage = 0;
+						$scope.entries = $filter('filter')($scope.entries, $scope.queryAdvanced, true);
+						$scope.queryAdvanced = '';
+					}
+				}).error(function(data) {
+					console.log('Error: ' + data);
 			});
+		}
+		else {
+			$http.get('/api/phoneBook').success(function(data) {
+					$scope.entries = data;
+					if($scope.queryAdvanced !== '') {
+						$scope.curPage = 0;
+						$scope.entries = $filter('filter')($scope.entries, $scope.queryAdvanced);
+						$scope.queryAdvanced = '';
+					}
+				}).error(function(data) {
+					console.log('Error: ' + data);
+			});
+		}
+    };
+	
+	$scope.checkForFilter = function() {
+		if($scope.query !== '') {
+			$scope.entries = $filter('filter')($scope.entries, {$:$scope.query});
+		}
+		if($scope.queryAdvanced !== '') {
+			$scope.entries = $filter('filter')($scope.entries, $scope.queryAdvanced, true);
+		}
 	};
 }
 

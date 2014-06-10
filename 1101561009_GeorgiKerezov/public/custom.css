@@ -48,9 +48,13 @@ body
     cursor: pointer;
 	color: #000;
 }
+.sortingLabel
+{
+	font-weight: bold;
+}
 .searchText
 {
-	padding:3px;
+	padding: 4px;
     margin: 5px 0px 5px 5px;
     -webkit-border-radius: 4px 0px 4px 4px;
     -moz-border-radius: 4px 0px 4px 4px;
@@ -63,6 +67,11 @@ body
     outline: none;
     display: inline-block;
 	color: #000;
+}
+.search-button
+{
+	margin-left: 6px;
+	padding: 2px 11px;
 }
 .errors
 {
@@ -145,7 +154,7 @@ body
 .pagination
 {
     margin: 5px 0px !important;
-	visibility: hidden;
+	visibility: visible;
 }
 .tableHeader
 {
