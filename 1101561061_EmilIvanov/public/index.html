@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Angular SPA</title>
+
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#phone-list 				{ margin-bottom:30px; }
+            #main 				    { margin-left:300px; text-align: center; }
+		</style>
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL PHONEBOOKS -->
+	<body ng-controller="mainController">
+        
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Emo's PhoneBook</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="basics/index.html">Todo List</a></li>
+            <li><a href="basics/indexOld.html">Old Todo List</a></li>
+				<li><a href="images/Niceseafront.jpg">To the Beach</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+        
+        
+		<div class="container">
+
+			<!-- HEADER AND PHONEBOOK COUNT -->
+			<div class="jumbotron text-center">
+				<h1>Emo's PhoneBook </h1>
+			</div>
+
+			<!-- PHONEBOOK LIST -->
+			<div id="phone-list" class="row">
+				<div class="col-sm-4 col-sm-offset-4">
+
+					<!-- LOOP OVER THE PHONEBOOKS IN $scope.phonebooks -->
+					
+
+				</div>
+			</div>
+
+			<!-- FORM TO CREATE PHONEBOOK -->
+			
+            
+            <section id="main" class="col-md-6" data-ng-app >
+            
+            
+						<h1>{{name}}</h1>
+						<div data-ng-controller="phoneController">
+							
+							<table class="table">
+								<tr data-ng-repeat="item in data">
+									
+									<td><span class="done-{{item.done}}">{{item.text}}</span></td>
+									<td>{{item._id}}</td>
+                                    
+                                    
+								</tr>
+							</table>
+							
+							<input type="text" data-ng-model="textPhone" placeholder="Add a Name" class="form-control input-lg text-center"/>
+							<br/>
+                            <br/>
+                            <input type="text" data-ng-model="textNum" placeholder="Add a Number" class="form-control input-lg text-center"/>
+                            <br/>
+							<button type="button" class="btn btn-primary btn-lg" data-ng-click="addPhone()">Add</button>
+                            
+                            
+                            
+							
+							
+						</div>
+                </section>
+
+		</div>
+	</body>
+</html>
