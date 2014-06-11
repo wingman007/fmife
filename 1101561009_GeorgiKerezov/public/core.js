@@ -7,6 +7,8 @@ $(document).ready(function() {
 	$('.errors').fadeOut(0);
 	$('#sortField').val('ByName');
 	$('#sortOrder').val('Type');
+	$('#pageSizeSelect').val('5');
+	$('.custom-pagesize-value').val('');
 });
 
 $(window).resize(function () {
@@ -35,7 +37,6 @@ function mainController($scope, $http, orderByFilter, $filter) {
 	$scope.predicate = '';
 	$scope.typePredicate = '';
 	$scope.queryAdvanced = {};
-	//$scope.strict = {};
 	$scope.query = '';
 	$scope.curPage = 0;
 	$scope.pageSize = 5;
@@ -55,16 +56,19 @@ function mainController($scope, $http, orderByFilter, $filter) {
 				$http.post('/api/phoneBook', $scope.formData).success(function(data) {
 						$scope.formData = {};
 						$scope.entries = data;
+						$scope.curPage = 0;
 						$scope.query = '';
+						$scope.queryAdvanced = '';
+						$('#exactMatch').prop('checked', false);
 					}).error(function(data) {
 						console.log('Error: ' + data);
 					});
-				clearErrors();
-				clearSuccess();
-				showSuccess();					
+				$scope.clearErrors();
+				$scope.clearSuccess();
+				$scope.showSuccess();					
 			}else {
-				clearErrors();
-				showErrors();
+				$scope.clearErrors();
+				$scope.showErrors();
 			}
 		}
 	};
@@ -79,8 +83,8 @@ function mainController($scope, $http, orderByFilter, $filter) {
 				if($scope.curPage < 0) {
 					$scope.curPage = 0;
 				}
-				clearSuccess();
-				showSuccess();
+				$scope.clearSuccess();
+				$scope.showSuccess();
 			}).error(function(data) {
 				console.log('Error: ' + data);
 			});
@@ -95,9 +99,6 @@ function mainController($scope, $http, orderByFilter, $filter) {
 	
 	$scope.editEntry = function(field) {
         $scope.newField = angular.copy(field);
-		if($('#exactMatch').prop('checked', true)) {
-			$('#exactMatch').prop('checked', false);
-		}
     };
     
     $scope.saveEntry = function(entry) {
@@ -106,16 +107,19 @@ function mainController($scope, $http, orderByFilter, $filter) {
             $http.put('/api/phoneBook/'+ entry._id, entry).success(function(data) {
 					$scope.entries = data;
 					$scope.checkForFilter();
+					if($scope.entries.length % $scope.pageSize === 0) {
+						$scope.curPage -= 1;
+					}
 				}).error(function(data) {
 					console.log('Error: ' + data);
 				});
 			editMode = false;
-			clearSuccess();
-			showSuccess();
+			$scope.clearSuccess();
+			$scope.showSuccess();
 		}else {
 				editMode = true;
-				clearErrors();
-				showErrors();
+				$scope.clearErrors();
+				$scope.showErrors();
 		}
     };
     
@@ -126,7 +130,7 @@ function mainController($scope, $http, orderByFilter, $filter) {
 			}).error(function(data) {
 				console.log('Error: ' + data);
 		});
-		clearErrors();
+		$scope.clearErrors();
     };
 	
 	$scope.changePredicate = function() {
@@ -148,11 +152,43 @@ function mainController($scope, $http, orderByFilter, $filter) {
 		}
     };
 	
+	$scope.changePageSize = function() {
+		if($('#pageSizeSelect').val() == 'other') {
+			$('.custom-pagesize').css('visibility', 'visible');
+		}
+		else {
+			$('.custom-pagesize').css('visibility', 'hidden');
+			$('.custom-pagesize-value').val('');
+			$scope.pageSize = $('#pageSizeSelect').val();
+			$http.get('/api/phoneBook').success(function(data) {
+					$scope.curPage = 0;
+					$scope.entries = data;
+					$scope.checkForFilter();
+				}).error(function(data) {
+					console.log('Error: ' + data);
+			});
+		}
+    };
+	
+	$scope.customPageSize = function() {
+		if($('.custom-pagesize-value').val() !== '') {
+			$scope.pageSize = $('.custom-pagesize-value').val();
+			$http.get('/api/phoneBook').success(function(data) {
+					$scope.curPage = 0;
+					$scope.entries = data;
+					$scope.checkForFilter();
+				}).error(function(data) {
+					console.log('Error: ' + data);
+			});
+		}
+	};
+	
 	$scope.toggleAdvancedSearch = function() {
 		if($('#toggleAdvanced').is(':checked')) {
 			$('#advancedSearch').css("visibility", "visible");
 			$('#advancedSearch').fadeIn(1000);
 			$('.basicSearch').fadeOut(800);
+			$scope.query = '';
 			togglePopovers();
 			$http.get('/api/phoneBook').success(function(data) {
 				$scope.entries = data;
@@ -170,6 +206,7 @@ function mainController($scope, $http, orderByFilter, $filter) {
 			togglePopovers();
 			$http.get('/api/phoneBook').success(function(data) {
 				$scope.entries = data;
+				$scope.curPage = 0;
 				}).error(function(data) {
 					console.log('Error: ' + data);
 			});
@@ -184,6 +221,7 @@ function mainController($scope, $http, orderByFilter, $filter) {
 		$http.get('/api/phoneBook').success(function(data) {
 				$scope.sortedData = orderByFilter(data, $scope.predicate);
 				$scope.entries = $scope.sortedData;
+				$scope.checkForFilter();
 			}).error(function(data) {
 				console.log('Error: ' + data);
 		});
@@ -192,8 +230,8 @@ function mainController($scope, $http, orderByFilter, $filter) {
     $scope.search = function() {
 		$http.get('/api/phoneBook').success(function(data) {
 				$scope.entries = data;
+				$scope.curPage = 0;
 				if($scope.query !== '') {
-					$scope.curPage = 0;
 					$scope.entries = $filter('filter')($scope.entries, {$:$scope.query});
 				}
 			}).error(function(data) {
@@ -202,13 +240,21 @@ function mainController($scope, $http, orderByFilter, $filter) {
     };
 	
 	$scope.searchAdvanced = function() {
+		if($('#firstNameSearch').val() === ''){
+			delete $scope.queryAdvanced.Fname;
+		}
+		if($('#lastNameSearch').val() === ''){
+			delete $scope.queryAdvanced.Lname;
+		}
+		if($('#phoneSearch').val() === ''){
+			delete $scope.queryAdvanced.Number;
+		}
 		if($('#exactMatch').is(':checked')) {
 			$http.get('/api/phoneBook').success(function(data) {
 					$scope.entries = data;
+					$scope.curPage = 0;
 					if($scope.queryAdvanced !== '') {
-						$scope.curPage = 0;
 						$scope.entries = $filter('filter')($scope.entries, $scope.queryAdvanced, true);
-						$scope.queryAdvanced = '';
 					}
 				}).error(function(data) {
 					console.log('Error: ' + data);
@@ -217,10 +263,9 @@ function mainController($scope, $http, orderByFilter, $filter) {
 		else {
 			$http.get('/api/phoneBook').success(function(data) {
 					$scope.entries = data;
+					$scope.curPage = 0;
 					if($scope.queryAdvanced !== '') {
-						$scope.curPage = 0;
 						$scope.entries = $filter('filter')($scope.entries, $scope.queryAdvanced);
-						$scope.queryAdvanced = '';
 					}
 				}).error(function(data) {
 					console.log('Error: ' + data);
@@ -233,44 +278,50 @@ function mainController($scope, $http, orderByFilter, $filter) {
 			$scope.entries = $filter('filter')($scope.entries, {$:$scope.query});
 		}
 		if($scope.queryAdvanced !== '') {
-			$scope.entries = $filter('filter')($scope.entries, $scope.queryAdvanced, true);
+			$scope.entries = $filter('filter')($scope.entries, $scope.queryAdvanced);
 		}
+		if($('#exactMatch').is(':checked')) {
+			if($scope.queryAdvanced !== '') {
+				$scope.entries = $filter('filter')($scope.entries, $scope.queryAdvanced, true);
+			}
+		}
+	};
+	
+	$scope.clearErrors = function() {
+		$('.errors').css("visibility", "hidden");
+		$('.errors').fadeOut(0);
+		$('.errors').empty();
+	};
+	
+	$scope.showErrors = function() {
+		$('.errors').css("visibility", "visible");
+		$('.errors').fadeIn(0);
+		$('.errors').append('<i class="glyphicon glyphicon-remove-circle"></i> Please enter a valid phonenumber');
+		
+		setTimeout( function(){
+			$('.errors').fadeOut(1500);
+		}
+		, 2000 );
+	};
+	
+	$scope.clearSuccess = function() {
+		$('.success').css("visibility", "hidden");
+		$('.success').fadeOut(0);
+		$('.success').empty();
+	};
+	
+	$scope.showSuccess = function() {
+		$('.success').css("visibility", "visible");
+		$('.success').fadeIn(0);
+		$('.success').append('<i class="glyphicon glyphicon-saved"></i> Success');
+		
+		setTimeout( function(){
+			$('.success').fadeOut(1200);
+		}
+		, 1200 );
 	};
 }
 
-function clearErrors() {
-	$('.errors').css("visibility", "hidden");
-	$('.errors').fadeOut(0);
-	$('.errors').empty();
-}
-
-function showErrors() {
-	$('.errors').css("visibility", "visible");
-	$('.errors').fadeIn(0);
-	$('.errors').append('<i class="glyphicon glyphicon-remove-circle"></i> Please enter a valid phonenumber');
-	
-	setTimeout( function(){
-		$('.errors').fadeOut(1500);
-	}
-	, 2000 );
-}
-
-function clearSuccess() {
-	$('.success').css("visibility", "hidden");
-	$('.success').fadeOut(0);
-	$('.success').empty();
-}
-
-function showSuccess() {
-	$('.success').css("visibility", "visible");
-	$('.success').fadeIn(0);
-	$('.success').append('<i class="glyphicon glyphicon-saved"></i> Success');
-	
-	setTimeout( function(){
-		$('.success').fadeOut(1200);
-	}
-	, 1200 );
-}
 function togglePopovers() {
 	var visiblePopovers = $(".counter").filter(':visible');
 	var number = visiblePopovers.length;

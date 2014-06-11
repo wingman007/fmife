@@ -15,7 +15,7 @@
 		
 	</head>
 	<!-- SET THE CONTROLLER AND GET ALL ENTRIES -->
-	<body ng-controller="mainController">
+	<body data-ng-controller="mainController">
 		<section class="container">
 
 			<!-- HEADER AND ENTRY COUNT -->
@@ -27,15 +27,15 @@
 					Number of records <span class="label label-info">{{ entries.length }}</span>
 				</h2>
 			</header>
-			<article>
+			<article class='main-wrapper'>
 				<section id="filters">
-					<span class='sortingLabel'>Sorting options</span><button type="button" class="sort-button" data-ng-click="sort()"><i class='glyphicon glyphicon-sort'></i>Sort</button><br/>
+					<p><span class='sortingLabel'>Sorting options</span><button type="button" class="sort-button" data-ng-click="sort()"><i class='glyphicon glyphicon-sort'></i>Sort</button></p>
 					<select id="sortField" data-ng-model="select_value" data-ng-change="changeField()">
 						<option value="ByName" disabled="disabled">By name</option>
 						<option value="fName">First name</option>
 						<option value="lName">Last name</option>
 					</select>
-					<select id="sortOrder" data-ng-model="select" ng-change="changePredicate()">
+					<select id="sortOrder" data-ng-model="select" data-ng-change="changePredicate()">
 						<option value="Type" disabled="disabled">Type</option>
 						<option value="asc">Ascending</option>
 						<option value="desc">Descending</option>
@@ -112,6 +112,19 @@
 							<button type="button" class="btn btn-primary button-next" data-ng-disabled="curPage >= entries.length/pageSize - 1" data-ng-click="curPage = curPage+1">NEXT<i class="glyphicon glyphicon-chevron-right"></i></button>
 						</li>
 					</ul>
+					<div class='page-size-change'>
+						<span class='pageLabel'>Page size</span>
+						<select id="pageSizeSelect" data-ng-model="select_item" data-ng-change="changePageSize()">
+							<option value="3">3 per page</option>
+							<option value="5">5 per page</option>
+							<option value="10">10 per page</option>
+							<option value="other">Other...</option>
+						</select>
+						<div class="custom-pagesize">
+							<input type="text" class="custom-pagesize-value" placeholder="Size"/>
+							<button type="button" class='custom-page-button' data-ng-click="customPageSize()">Go!</button>
+						</div>
+					</div>
 				</div>
 			</article>
 			<!-- FORM TO CREATE ENTRIES -->
@@ -120,9 +133,9 @@
 					<form>
 						<div class="form-group">
 							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-							<input type="text" required="required" class="form-control input-lg text-center" placeholder="First Name" data-ng-model="formData.Fname">
-							<input type="text" required="required" class="form-control input-lg text-center" placeholder="Last Name" data-ng-model="formData.Lname">
-							<input type="text" required="required" class="form-control input-lg text-center" placeholder="Number" data-ng-model="formData.Number">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="First Name" data-ng-model="formData.Fname"/>
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="Last Name" data-ng-model="formData.Lname"/>
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="Number" data-ng-model="formData.Number"/>
 						</div>
 
 						<!-- createEntry() WILL CREATE NEW ENTRIES -->

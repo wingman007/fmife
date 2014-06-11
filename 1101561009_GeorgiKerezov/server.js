@@ -80,7 +80,6 @@
 
 	// delete a PhoneBook
 	app.delete('/api/phoneBook/:PhoneBook_id', function(req, res) {
-	//req.params = contains the parameters in the url(request);
 		PhoneBook.remove({_id: req.params.PhoneBook_id}, 
 			function(err){
 				if (err){
