@@ -1,0 +1,18 @@
+﻿body {
+    padding-top:50px;
+    background: url("wavegrid_@2X.png");
+    background-repeat: repeat;
+    overflow:scroll;
+}
+.container{
+    max-width: 1000px;
+    width: 100%;
+}
+
+.page-header{
+   width: 100%;
+}
+#addContact-form{
+    width: 90%;
+    margin: 0 auto;
+}
