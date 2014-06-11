@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Angular SPA</title>
+
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#member-list 				{ margin-bottom:30px; }
+		</style>
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL members -->
+	<body ng-controller="mainController">
+		<div class="container">
+
+			<!-- HEADER AND TODO COUNT -->
+			<div class="jumbotron text-center">
+				<h1>Simple Phonebook <span class="label label-info">{{ members.length }}</span></h1>
+			</div>
+
+			<!-- TODO LIST -->
+			<div id="member-list" class="row">
+				<table class="table">
+				  <thead>
+					<tr>
+					  <th>Delete</th>
+					  <th>Name</th>
+					  <th>Phone</th>
+					  <th>Email</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					<tr ng-repeat="member in members">
+					  <td><input type="checkbox" ng-click="deleteMember(member._id)"></td>
+					  <td>{{ member.name }}</td>
+					  <td>{{ member.phone }}</td>
+					  <td>{{ member.email }}</td>
+					</tr>
+				  </tbody>
+				</table>						
+			</div>
+
+			<!-- FORM TO CREATE members -->
+			<div id="member-form" class="row">
+				<div class="col-sm-8 col-sm-offset-2 text-center">
+					<form>
+						<div class="form-group">
+
+							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+							<input type="text" class="form-control input-lg text-center" placeholder="enter name" ng-model="formData.name">
+							<input type="text" class="form-control input-lg text-center" placeholder="enter phone number" ng-model="formData.phone">
+							<input type="text" class="form-control input-lg text-center" placeholder="enter email address" ng-model="formData.email">
+
+						</div>
+
+						<!-- createToDo() WILL CREATE NEW members -->
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="createMember()">Add</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>
