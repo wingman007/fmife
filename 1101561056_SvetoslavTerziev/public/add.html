@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="urf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
-		<title>Angular SPA</title>
+		<title>Add new record</title>
 
 		<!-- We have to install AngulaJS in this page -->
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
@@ -18,7 +18,7 @@
 		<style type="text/css">
 			html 					{ overflow-y:scroll; }
 			body 					{ padding-top:50px; }
-			#todo-list 				{ margin-bottom:30px; }
+			#record-list 				{ margin-bottom:30px; }
 		</style>
 		
 		<!-- Optional theme -->
@@ -37,7 +37,7 @@
 		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
 	</head>
 
-<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<!-- SET THE CONTROLLER AND GET ALL records -->
 	<body ng-controller="mainController">
 		<div class="container">
 		    <div class="container">
@@ -62,8 +62,8 @@
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </div>
-					<!-- FORM TO CREATE TODOS -->
-				<div id="todo-form" class="row">
+					<!-- FORM TO CREATE records -->
+				<div id="record-form" class="row">
 				<div class="col-sm-8 col-sm-offset-2 text-center">
 					<form>
 						<div class="form-group">
@@ -74,8 +74,8 @@
 							<input type="text" class="form-control input-lg text-center" placeholder="Address" ng-model="formData.address">
 							<input type="text" class="form-control input-lg text-center" placeholder="Email" ng-model="formData.email">
 							<input type="text" class="form-control input-lg text-center" placeholder="Phone Number" ng-model="formData.phone">
-						<!-- createToDo() WILL CREATE NEW TODOS -->
-						<button type="submit" class="btn btn-primary btn-lg glyphicon glyphicon-plus-sign" ng-click="createTodo()">Add</button></label>
+						<!-- createrecord() WILL CREATE NEW records -->
+						<button type="submit" class="btn btn-primary btn-lg glyphicon glyphicon-plus-sign" ng-click="createRecord()">Add</button></label>
 					</form>
 				</div>
 			</div>

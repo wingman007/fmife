@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="urf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
-		<title>Angular SPA</title>
+		<title>Phonebook</title>
 
 		<!-- We have to install AngulaJS in this page -->
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
@@ -18,7 +18,7 @@
 		<style type="text/css">
 			html 					{ overflow-y:scroll; }
 			body 					{ padding-top:50px; }
-			#todo-list 				{ margin-bottom:30px; }
+			#record-list 				{ margin-bottom:30px; }
 		</style>
 		
 		<!-- Optional theme -->
@@ -37,7 +37,7 @@
 		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
 	</head>
 
-<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<!-- SET THE CONTROLLER AND GET ALL records -->
 	<body ng-controller="mainController">
 		<div class="container">
 			      <!-- Static navbar -->
@@ -60,14 +60,14 @@
 				  </div><!--/.nav-collapse -->
 				</div><!--/.container-fluid -->
 			  </div>
-			<!-- HEADER AND TODO COUNT -->
+			<!-- HEADER AND RECORD COUNT -->
 			<div class="jumbotron text-center">
-				<h1>Phone Book <span class="label label-info">Numbers:{{ todos.length }}</span></h1>
+				<h1>Phone Book <span class="label label-info">Numbers:{{ records.length }}</span></h1>
 			</div>
 
-			<!-- TODO LIST -->
-			<div id="todo-list" class="row">
-				<div class="table-responsive">
+			<!-- RECORD LIST -->
+			<div id="record-list" class="row">
+				<div class="table">
 							<table class="table table-striped">
 							  <thead>
 								<tr>
@@ -81,17 +81,17 @@
 								</tr>
 							  </thead>
 							   <tbody>
-					<!-- LOOP OVER THE TODOS IN $scope.todos -->
+					<!-- LOOP OVER THE records IN $scope.records -->
 					<div class="checkbox">
 					
-							<tr ng-repeat="todo in todos">
-							<td><button type="button" class="btn btn-danger" ng-click="deleteTodo(todo._id)">X</td>					
-							  <td>{{ todo._id }}</td>
-							  <td>{{ todo.fName }}</td>
-							  <td>{{ todo.lName }}</td>
-							  <td>{{ todo.address }}</td>
-							  <td>{{ todo.email }}</td>
-							  <td>{{ todo.phone }}</td>
+							<tr ng-repeat="record in records">
+							<td><button type="button" class="btn btn-danger" ng-click="deleteRecord(record._id)">X</td>					
+							  <td>{{ record._id }}</td>
+							  <td>{{ record.fName }}</td>
+							  <td>{{ record.lName }}</td>
+							  <td>{{ record.address }}</td>
+							  <td>{{ record.email }}</td>
+							  <td>{{ record.phone }}</td>
 							</tr>
 					</div>
 					</tbody>

@@ -18,8 +18,8 @@
 	});
 	
 	// 2) Mongo model
-	// define model ================= That is all we want. Just the text for the todo. MongoDB will automatically generate an _id for each todo that we create also.
-	var Todo = mongoose.model('Todo', {
+	// define model ================= That is all we want. Just the text for the record. MongoDB will automatically generate an _id for each record that we create also.
+	var Record = mongoose.model('Record', {
 		fName : String,
 		lName : String,
 		address : String,
@@ -30,73 +30,73 @@
 	// 3) routes ======================================================================
 
 	// api ---------------------------------------------------------------------
-	// get all todos
-	app.get('/api/todos', function(req, res) {
+	// get all records
+	app.get('/api/records', function(req, res) {
 
-		// use mongoose to get all todos in the database
-		Todo.find(function(err, todos) {
+		// use mongoose to get all records in the database
+		Record.find(function(err, records) {
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
 
-			res.json(todos); // return all todos in JSON format
+			res.json(records); // return all records in JSON format
 		});
 	});
 
 	// --------------------- Start Extra Update --------------------------
-	app.get('/api/todos/:todo_id', function(req, res) {
+	app.get('/api/records/:record_id', function(req, res) {
 
-		// use mongoose to get all todos in the database
-		Todo.findOne({_id: req.params.todo_id}, '_id text done', function(err, todo) {
+		// use mongoose to get all records in the database
+		Record.findOne({_id: req.params.record_id}, '_id text done', function(err, record) {
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
 
-			res.json(todo); // return all todos in JSON format
+			res.json(record); // return all records in JSON format
 		});
 	});
 	// ----------------------- End Extra Update --------------------------
 	
-	// create todo and send back all todos after creation
-	app.post('/api/todos', function(req, res) {
+	// create record and send back all records after creation
+	app.post('/api/records', function(req, res) {
 
-		// create a todo, information comes from AJAX request from Angular
-		Todo.create({
+		// create a record, information comes from AJAX request from Angular
+		Record.create({
 			fName : req.body.fName,
 			lName : req.body.lName,
 			address : req.body.address,
 			email : req.body.email,
 			phone : req.body.phone,
 			done : false
-		}, function(err, todo) {
+		}, function(err, record) {
 			if (err)
 				res.send(err);
 
-			// get and return all the todos after you create another
-			Todo.find(function(err, todos) {
+			// get and return all the records after you create another
+			Record.find(function(err, records) {
 				if (err)
 					res.send(err)
-				res.json(todos);
+				res.json(records);
 			});
 		});
 
 	});
 
-	// delete a todo
-	app.delete('/api/todos/:todo_id', function(req, res) {
-		Todo.remove({
-			_id : req.params.todo_id
-		}, function(err, todo) {
+	// delete a record
+	app.delete('/api/records/:record_id', function(req, res) {
+		Record.remove({
+			_id : req.params.record_id
+		}, function(err, record) {
 			if (err)
 				res.send(err);
 
-			// get and return all the todos after you create another
-			Todo.find(function(err, todos) {
+			// get and return all the records after you create another
+			Record.find(function(err, records) {
 				if (err)
 					res.send(err)
-				res.json(todos);
+				res.json(records);
 			});
 		});
 	});
