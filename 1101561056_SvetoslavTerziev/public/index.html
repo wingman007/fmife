@@ -40,42 +40,68 @@
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
 	<body ng-controller="mainController">
 		<div class="container">
-
+			      <!-- Static navbar -->
+			  <div class="navbar navbar-inverse navbar-default" role="navigation">
+				<div class="container-fluid">
+				  <div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					  <span class="sr-only">Toggle navigation</span>
+					  <span class="icon-bar"></span>
+					  <span class="icon-bar"></span>
+					  <span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="./">Svetlio's project</a>
+				  </div>
+				  <div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+					  <li class="active"><a href="./">Index</a></li>
+					  <li><a href="add.html">Add New</a></li>
+					</ul>
+				  </div><!--/.nav-collapse -->
+				</div><!--/.container-fluid -->
+			  </div>
 			<!-- HEADER AND TODO COUNT -->
 			<div class="jumbotron text-center">
-				<h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+				<h1>Phone Book <span class="label label-info">Numbers:{{ todos.length }}</span></h1>
 			</div>
 
 			<!-- TODO LIST -->
 			<div id="todo-list" class="row">
-				<div class="col-sm-4 col-sm-offset-4">
-
+				<div class="table-responsive">
+							<table class="table table-striped">
+							  <thead>
+								<tr>
+								<th>Delete</th>
+								  <th>Id</th>
+								  <th>First Name</th>
+								  <th>Last Name</th>
+								  <th>Address</th>
+								  <th>Email</th>
+								<th>Phone</th>
+								</tr>
+							  </thead>
+							   <tbody>
 					<!-- LOOP OVER THE TODOS IN $scope.todos -->
-					<div class="checkbox" ng-repeat="todo in todos">
-						<label>
-							<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-						</label>
+					<div class="checkbox">
+					
+							<tr ng-repeat="todo in todos">
+							<td><button type="button" class="btn btn-danger" ng-click="deleteTodo(todo._id)">X</td>					
+							  <td>{{ todo._id }}</td>
+							  <td>{{ todo.fName }}</td>
+							  <td>{{ todo.lName }}</td>
+							  <td>{{ todo.address }}</td>
+							  <td>{{ todo.email }}</td>
+							  <td>{{ todo.phone }}</td>
+							</tr>
 					</div>
-
+					</tbody>
+					</table>
 				</div>
+
 			</div>
 
-			<!-- FORM TO CREATE TODOS -->
-			<div id="todo-form" class="row">
-				<div class="col-sm-8 col-sm-offset-2 text-center">
-					<form>
-						<div class="form-group">
 
-							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
-							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.name">
-						</div>
-
-						<!-- createToDo() WILL CREATE NEW TODOS -->
-						<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
-					</form>
-				</div>
-			</div>
+	
 
 		</div>
 	</body>

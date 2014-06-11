@@ -20,8 +20,11 @@
 	// 2) Mongo model
 	// define model ================= That is all we want. Just the text for the todo. MongoDB will automatically generate an _id for each todo that we create also.
 	var Todo = mongoose.model('Todo', {
-		text : String,
-		name : String
+		fName : String,
+		lName : String,
+		address : String,
+		email : String,
+		phone : String
 	});
 	
 	// 3) routes ======================================================================
@@ -61,8 +64,11 @@
 
 		// create a todo, information comes from AJAX request from Angular
 		Todo.create({
-			text : req.body.text,
-			name : req.body.name,
+			fName : req.body.fName,
+			lName : req.body.lName,
+			address : req.body.address,
+			email : req.body.email,
+			phone : req.body.phone,
 			done : false
 		}, function(err, todo) {
 			if (err)
