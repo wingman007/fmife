@@ -1,9 +1,9 @@
 {
-	"name"         : "node-todo",
+	"name"         : "Phonebook",
 	"version"      : "0.0.0",
 	"description"  : "Simple todo application.",
 	"main"         : "server.js",
-	"author"       : "FMI Front End",
+	"author"       : "Hristo Enchev",
 	"dependencies" : {
 		"express"    : "~3.4.4",
 		"mongoose"   : "~3.6.2"

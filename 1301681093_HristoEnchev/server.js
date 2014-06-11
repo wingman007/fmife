@@ -1,112 +1,74 @@
-// server.js
-
-	// set up ========================
 	var express  = require('express');
-	var app      = express(); 								// create our app w/ express
-	var mongoose = require('mongoose'); 					// mongoose for mongodb
+	var app      = express(); 								
+	var mongoose = require('mongoose'); 					
 
-	// configuration =================
-
-//	mongoose.connect('mongodb://node:node@mongo.onmodulus.net:27017/uwO3mypu'); 	// connect to mongoDB database on modulus.io
-
-	mongoose.connect('mongodb://localhost/test');
+	mongoose.connect('mongodb://localhost/Phonebook');
 	
 	app.configure(function() {
-		app.use(express.static(__dirname + '/public')); 		// set the static files location /public/img will be /img for users
-		app.use(express.logger('dev')); 						// log every request to the console
-		app.use(express.bodyParser()); 							// pull information from html in POST
+		app.use(express.static(__dirname + '/public')); 		
+		app.use(express.logger('dev')); 						
+		app.use(express.bodyParser()); 							
 	});
 	
 	// 2) Mongo model
-	// define model ================= That is all we want. Just the text for the todo. MongoDB will automatically generate an _id for each todo that we create also.
-	var Todo = mongoose.model('Todo', {
-		text : String
+	var Contact = mongoose.model('contact', {
+		name : String,
+		pNumber : String
 	});
 	
-	// 3) routes ======================================================================
 
-	// api ---------------------------------------------------------------------
-	// get all todos
-	app.get('/api/todos', function(req, res) {
+	app.get('/api/contacts', function(req, res) {
 
-		// use mongoose to get all todos in the database
-		Todo.find(function(err, todos) {
+		Contact.find(function(err, contacts) {
 
-			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
 
-			res.json(todos); // return all todos in JSON format
+			res.json(contacts); 
 		});
 	});
-
-	// --------------------- Start Extra Update --------------------------
-	app.get('/api/todos/:todo_id', function(req, res) {
-
-		// use mongoose to get all todos in the database
-		Todo.findOne({_id: req.params.todo_id}, '_id text done', function(err, todo) {
-
-			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
+	app.get('/api/contacts/:name_id', function(req, res) {
+		Contact.findOne({_id: req.params.name_id}, '_id text done', function(err, name) {
 			if (err)
 				res.send(err)
-
-			res.json(todo); // return all todos in JSON format
+			res.json(name); 
 		});
 	});
-	// ----------------------- End Extra Update --------------------------
-	
-	// create todo and send back all todos after creation
-	app.post('/api/todos', function(req, res) {
-
-		// create a todo, information comes from AJAX request from Angular
-		Todo.create({
-			text : req.body.text,
+	app.post('/api/contacts', function(req, res) {
+		Contact.create({
+			name : req.body.name,
+			pNumber : req.body.pNumber,
 			done : false
-		}, function(err, todo) {
+		}, function(err, name) {
 			if (err)
 				res.send(err);
-
-			// get and return all the todos after you create another
-			Todo.find(function(err, todos) {
+			Contact.find(function(err, contacts) {
 				if (err)
 					res.send(err)
-				res.json(todos);
+				res.json(contacts);
 			});
 		});
 
 	});
 
-	// delete a todo
-	app.delete('/api/todos/:todo_id', function(req, res) {
-		Todo.remove({
-			_id : req.params.todo_id
-		}, function(err, todo) {
+	app.delete('/api/contacts/:name_id', function(req, res) {
+		Contact.remove({
+			_id : req.params.name_id
+		}, function(err, name) {
 			if (err)
 				res.send(err);
 
-			// get and return all the todos after you create another
-			Todo.find(function(err, todos) {
+			Contact.find(function(err, contacts) {
 				if (err)
 					res.send(err)
-				res.json(todos);
+				res.json(contacts);
 			});
 		});
 	});
-	// Even without it works	
-	// application -------------------------------------------------------------
 	app.get('*', function(req, res) {
-		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+		res.sendfile('./public/index.html'); 
 	});
 	
-	// listen (start app with node server.js) ======================================
-	app.listen(8081);
-	console.log("App listening on port 8081");
+	app.listen(8083);
+	console.log("App listening on port 8083");
 
-/*
-http://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
-Model.findOne({ name: 'borne' }, function (err, doc) {
-  if (err) ..
-  doc.name = 'jason borne';
-  doc.save(callback);
-})
-*/
