@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Phone Book</title>
+
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+
+        <!-- jQuery -->
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+        <!-- Bootsrap --- -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+        <script src="app.js"></script>
+
+    </head>
+    <body>
+
+
+        <div class="container">
+
+            <div class="row">
+                <section id="main" class="col-md-6" data-ng-app>
+                    <div data-ng-controller="phoneController">
+                        <table class="table">
+                            <tr data-ng-repeat="item in data">
+                                <td>{{item._id}}</td><td>{{item.name}}</td><td>{{item.number}}</td>
+                            </tr>
+                        </table>
+
+                        Name: <input type="text" data-ng-model="fullname" class="form-control"/><br />
+                        Phone: <input type="text" data-ng-model="number" class="form-control"/>
+                        <!-- Indicates a successful or positive action -->
+                        <button type="button" class="btn btn-success" data-ng-click="addPhone()">Add Phone</button>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </div>
+    </body>
+</html>
