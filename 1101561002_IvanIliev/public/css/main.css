@@ -1,0 +1,192 @@
+﻿/* Index.html */
+
+/* Navigation starts here */
+
+ul#navlist a
+{
+	font-weight: bold;
+	text-decoration: none;
+}
+
+ul#navlist, ul#navlist ul, ul#navlist li
+{
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+ul#navlist li 
+{ 
+	float: left; 
+	
+}
+
+ul#navlist li a
+{
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );
+	background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );
+	background-color:#006699; 
+	color:#FFFFFF; 
+	font-size: 15px; 
+	font-weight: bold;
+	text-align: center; 	
+	border-left: 1px solid #0070A8;
+	padding: 4px;
+}
+
+ul#navlist li a:hover
+{
+	color: #FFFFFF;
+}
+
+ul#navlist li a:active
+{
+	border: 1px #ffffff inset;
+	background-color: #BBBBBB;
+	color: #cccccc;
+}
+
+ul#subnavlist { display: none; }
+ul#subnavlist li { float: none; }
+
+ul#subnavlist li a
+{
+	margin: 0px;
+	padding: 0px;
+}
+
+ul#navlist li:hover ul#subnavlist
+{
+	display: block;
+	padding-top: 5px;
+	position: absolute;
+}
+
+ul#navlist li:hover ul#subnavlist li a
+{
+	border: none;
+	display: block;
+	padding: 2px;
+	width: 10em;
+}
+
+/* Navigation Ends Here */
+
+
+.rowSeparator
+{
+	margin-top: 3%;
+}
+
+.HeaderForMiniDevices
+{
+	display: none;
+}
+
+#LoginSection
+{
+	display: inline;
+	float:right;
+}
+
+#loginForm input
+{
+	width: 100px;
+}
+
+#phone-row
+{
+	display: none; /* visibility: hidden; */
+}
+
+#phonebookForm
+{
+	
+}
+
+#btnPhoneForm
+{
+	margin-top: 10px;
+}
+
+
+/* Responsive Footer */
+
+* {
+	margin: 0;
+}
+
+html, body 
+{
+	height: 100%;
+}
+
+.mainWrapper 
+{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -3%;
+}
+
+.footer, .push 
+{
+	height: 3%;
+	clear: both;
+}
+
+#footerMenu
+{
+	width: 100%;
+	text-align: center;
+	color: grey;
+} 
+
+#footerLogoLeft, #footerLogoRight
+{
+	margin: 0px 5px;
+}
+
+/* End of Footer */
+
+
+/* Media Properties */
+
+@media (max-width: 992px) 
+{
+	.searchbar, .loginSection
+	{
+		display: none;
+	}
+	.HeaderForMiniDevices
+	{
+		display: initial
+	}
+	.HeaderForMiniDevices  #searchbar
+	{
+		display: initial;
+	}
+	.HeaderForMiniDevices  #loginSection
+	{
+		display: initial;
+	}
+	#registrationSection .personalInfo
+	{
+		width: 30%;
+	}
+}
+
+
+/* Special Ones: */
+
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+
