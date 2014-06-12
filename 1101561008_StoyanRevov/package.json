@@ -1,0 +1,11 @@
+{
+	"name"         : "fmife-grades",
+	"version"      : "0.0.0",
+	"description"  : "This is not a phonebook.",
+	"main"         : "server.js",
+	"author"       : "Stoyan Revov",
+	"dependencies" : {
+		"express"    : "~3.4.4",
+		"mongoose"   : "~3.6.2"
+	}
+}
