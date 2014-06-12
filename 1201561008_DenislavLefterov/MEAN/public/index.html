@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Great Guest Book</title>
+
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:55px; }
+			#guest-list 				{ margin-bottom:35px; }
+		</style>
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+		<link rel="stylesheet" href="design.css" type="text/css">
+	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+	<body ng-controller="mainController">
+		<div class="container">
+
+			<!-- HEADER AND GUEST COUNT -->
+			<div class="jumbotron text-center">
+				<h1>Feels great to use a guestBook<span class="label label-info">{{ guest.length }}</span></h1>
+			</div>
+			<table id="content-table" class="table table-striped">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Description</th>
+					<th>Complain</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="entry in entries">
+					<td >
+							{{ entry.fName }}
+					</td>
+					<td >
+							{{ entry.fName }}
+					</td>
+					<td >
+							{{ entry.description }} 
+					<td >
+							{{ entry.complain }} 
+					</td>
+					</td>
+					<td>
+						<input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="delete" />
+					</td>
+				</tr>
+			</tbody>
+			</table>
+
+			<!-- FORM TO CREATE GUESTS -->
+			<div id="todo-form" class="row">
+				<div class="col-sm-8 col-sm-offset-2 text-center">
+					<form>
+						<div class="form-group">
+
+							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="first name" ng-model="formData.fName">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="last name" ng-model="formData.lName">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="description" ng-model="formData.description">
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="complain" ng-model="formData.complain">
+						</div>
+
+						<!-- createGuest() WILL CREATE NEW GUEST -->
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="createEntry()">Add</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
+		<footer id="footer">
+			<div class="muted credit"> Denislav Lefterov's GuestBook <br> Faculty Number: 1201561008</div>
+		</footer>
+	</body>
+</html>
