@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Phonebook</title>
+		
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="custom.css">
+		<link rel="stylesheet" href="//silviomoreto.github.io/bootstrap-select/stylesheets/bootstrap-select.css">				
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<link rel="icon" type="image/png" href="img/phonebook.png">
+		
+	</head>
+	<!-- SET THE CONTROLLER AND GET ALL ENTRIES -->
+	<body data-ng-controller="mainController">
+		<section class="container">
+
+			<!-- HEADER AND ENTRY COUNT -->
+			<header class="jumbotron text-center">
+				<h1>
+					Simple Phonebook
+				</h1>
+				<h2>
+					Number of records <span class="label label-info">{{ entries.length }}</span>
+				</h2>
+			</header>
+			<article class='main-wrapper'>
+				<section id="filters">
+					<p><span class='sortingLabel'>Sorting options</span><button type="button" class="sort-button" data-ng-click="sort()"><i class='glyphicon glyphicon-sort'></i>Sort</button></p>
+					<select id="sortField" data-ng-model="select_value" data-ng-change="changeField()">
+						<option value="ByName" disabled="disabled">By name</option>
+						<option value="fName">First name</option>
+						<option value="lName">Last name</option>
+					</select>
+					<select id="sortOrder" data-ng-model="select" data-ng-change="changePredicate()">
+						<option value="Type" disabled="disabled">Type</option>
+						<option value="asc">Ascending</option>
+						<option value="desc">Descending</option>
+					</select>
+					<div class="basicSearch">
+						<span class="advancedSearchText">
+							Search: <input type="text" class="searchText" data-ng-model="query"/>
+							<i class="glyphicon glyphicon-search btn btn-default" data-ng-click="search()"></i>
+						</span>
+					</div>
+					<label for="toggleAdvanced" class="labelForSearch">Advanced search</label>
+					<input type="checkbox" id="toggleAdvanced" data-ng-click="toggleAdvancedSearch()"/>
+				</section>
+				<div id="advancedSearch" class="form-inline">
+					<hr/>
+					<div class="form-group">
+						<input id="firstNameSearch" type="text" class="form-control" placeholder="First name only" data-ng-model="queryAdvanced.Fname"/>
+					</div>
+					<div class="form-group">
+						<input id="lastNameSearch" type="text" class="form-control" placeholder="Last name only" data-ng-model="queryAdvanced.Lname"/>
+					</div>
+					<div class="form-group ">
+						<input id="phoneSearch" type="text" class="form-control" placeholder="Phone only" data-ng-model="queryAdvanced.Number"/>
+					</div>
+					<i class="glyphicon glyphicon-zoom-in btn btn-default" data-ng-click="searchAdvanced()"></i>
+					<div class="checkbox">
+						<input id="exactMatch" type="checkbox" data-ng-model="strict" /><label for="exactMatch"><span class="exactMatchText">Exact match</span></label>
+					</div>
+				</div>
+				<table id="content-table" class="table table-striped">
+					<thead>
+						<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Number</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="entry in entries | pagination: curPage * pageSize | limitTo: pageSize" bs-popover>
+							<td>
+								<span data-ng-hide="editMode">{{entry.Fname}}</span>
+								<input type="text" data-ng-show="editMode" data-ng-model="entry.Fname" data-ng-required />
+							</td>
+							<td>
+								<span data-ng-hide="editMode">{{entry.Lname}}</span>
+								<input type="text" data-ng-show="editMode" data-ng-model="entry.Lname" data-ng-required />
+							</td>
+							<td>
+								<span data-ng-hide="editMode">{{entry.Number}}</span>
+								<input type="text" data-ng-show="editMode" data-ng-model="entry.Number" data-ng-required />
+							</td>
+							<td>
+								<button type="button" data-ng-hide="editMode" data-ng-click="editMode = true; editEntry(entry)" class="btn btn-primary"><i class='glyphicon glyphicon-edit'></i>Edit</button>
+								<button type="button" data-ng-show="editMode" data-ng-click="saveEntry(entry)" class="btn btn-success"><i class='glyphicon glyphicon-save'></i>Save</button>
+								<button type="button" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-danger"><i class='glyphicon glyphicon-remove'></i>Cancel</button>
+							</td>
+							<td>
+								<div class="lastColumn">
+									<a name='{{entry._id}}' class="btn btn-large btn-danger" rel="popover" data-content="<div id='{{entry._id}}' class='popover fade top in counter' style='display: inline;'><div class='popover-content text-center'><div class='btn-group'><a id={{entry._id}} class='btn btn-small btn-success popOver-yes'><i class='icon-ok-sign icon-white'></i> Yes</a><a class='btn btn-small btn-danger popOver-no'><i class='icon-remove-sign icon-white'></i> No</a></div></div></div>"><i class='glyphicon glyphicon-remove'></i>Delete</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="pagination" data-ng-show="entries.length">
+					<ul class="pagination-control pagination">
+						<li>
+							<button type="button" class="btn btn-primary button-prev" data-ng-disabled="curPage == 0" data-ng-click="curPage=curPage-1"><i class="glyphicon glyphicon-chevron-left"></i>PREV</button>
+						</li>
+						<li>
+							<span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+						</li>
+						<li>
+							<button type="button" class="btn btn-primary button-next" data-ng-disabled="curPage >= entries.length/pageSize - 1" data-ng-click="curPage = curPage+1">NEXT<i class="glyphicon glyphicon-chevron-right"></i></button>
+						</li>
+					</ul>
+					<div class='page-size-change'>
+						<span class='pageLabel'>Page size</span>
+						<select id="pageSizeSelect" data-ng-model="select_item" data-ng-change="changePageSize()">
+							<option value="3">3 per page</option>
+							<option value="5">5 per page</option>
+							<option value="10">10 per page</option>
+							<option value="other">Other...</option>
+						</select>
+						<div class="custom-pagesize">
+							<input type="text" class="custom-pagesize-value" placeholder="Size"/>
+							<button type="button" class='custom-page-button' data-ng-click="customPageSize()">Go!</button>
+						</div>
+					</div>
+				</div>
+			</article>
+			<!-- FORM TO CREATE ENTRIES -->
+			<section id="entry-form" class="row">
+				<div class="col-sm-8 col-sm-offset-2 text-center">
+					<form>
+						<div class="form-group">
+							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="First Name" data-ng-model="formData.Fname"/>
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="Last Name" data-ng-model="formData.Lname"/>
+							<input type="text" required="required" class="form-control input-lg text-center" placeholder="Number" data-ng-model="formData.Number"/>
+						</div>
+
+						<!-- createEntry() WILL CREATE NEW ENTRIES -->
+						<button type="submit" class="btn btn-success btn-lg" data-ng-click="createEntry()"><i class='glyphicon glyphicon-plus'></i>Add</button>
+					</form>
+				</div>
+			</section>
+			<section class="success"></section>
+			<section class="errors"></section>
+		</section>
+		<footer id="footer">
+			<p class="muted"><i class='glyphicon glyphicon-copyright-mark'></i>Created by Georgi Kerezov, Faculty number: 1101561009</p>
+		</footer>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<script src="core.js"></script>
+	</body>
+</html>
