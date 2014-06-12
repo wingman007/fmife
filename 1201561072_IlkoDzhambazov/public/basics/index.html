@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first Angular App</title>
+
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+
+		<!-- jQuery -->
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+		<!-- Bootsrap --- -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<script src="app.js"></script>
+
+	</head>
+	<body>
+		<div clsss="container">
+			<header class="row">
+				<div class="col-md-12">
+		
+	  
+	  
+					I am the header
+				</div>
+			</header>
+
+			<nav class="row">
+				<div class="col-md-12">
+						<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">Link</a></li>
+						<li class="dropdown">
+						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+						  <ul class="dropdown-menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						  </ul>
+						</li>
+					  </ul>
+				</div>
+			</nav>
+			  <div class="jumbotron">
+        <h1>Jumbotron heading</h1>
+        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
+      </div>
+				<button type="button" class="btn btn-xs btn-default">Default</button>
+			<div class="row">
+				<section id="sidebar1" class="col-md-3">
+					<p>sidebar 1</p>
+					
+					
+				</section>
+
+				<section id="main" class="col-md-6" data-ng-app>
+				
+					<div class="col-sm-4">
+					
+         		 <input type="text" name="username" value="default" placeholder="Username" ng-model="username"/>
+					 <br> <input type="text" name="username" value="default" placeholder="Phone number" ng-model="phonenumber"/>
+					{{username}}
+					<div ng-controller="todoController">
+						{{hello}}
+						<table>
+							<tr ng-repeat="todo in data">
+								<td>{{todo._id}}</td>
+								<td>{{todo.text}}</td>
+							</tr>
+						</table>
+						<P>I also can use functions {{myAction()}}</p>
+					</div>
+					</article>
+
+					
+				</section>
+
+				<aside class="col-md-3">
+				
+			
+					 
+					 <article>
+					Aside
+				</aside>
+			</div>
+
+			<footer class="row">
+				<div class="col-md-12">
+					I am the footer
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>
