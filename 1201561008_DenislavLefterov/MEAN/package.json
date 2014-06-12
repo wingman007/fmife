@@ -1,0 +1,11 @@
+{
+	"name"         : "GuestBook",
+	"version"      : "1.0.1",
+	"description"  : "This is a GuestBook for users.",
+	"main"         : "server.js",
+	"author"       : "Denislav Lefterov 1201561008",
+	"dependencies" : {
+		"express"    : "~3.4.4",
+		"mongoose"   : "~3.6.2"
+	}
+}
