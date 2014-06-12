@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>PhoneBook</title>
+
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#phone-list 				{ margin-bottom:30px; }
+			
+		</style>
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL Phones -->
+	<body ng-controller="mainController">
+		<div class="container">
+
+			<!-- HEADER AND Phone COUNT -->
+			<div class="jumbotron text-center">
+				<h1>PhoneBook App <span class="label label-info">{{ phones.length }}</span></h1>
+			</div>
+
+			<!-- Phone LIST -->
+			<div id="phone-list" class="row">
+				<table class="table">
+                	<thead>
+                    	<tr>
+                        	<th>Delete</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                    	</tr>
+                        <tbody>
+                            <tr ng-repeat="phone in phones">
+                            	<td><input type="checkbox" ng-click="deletePhone(phone._id)"></td>
+                                <td>{{phone.name}}</td>
+                                <td>{{phone.phone}}</td>
+                            </tr>
+                        </tbody>
+                    </thead>
+				</table>
+			</div>
+
+			<!-- FORM TO CREATE Phones -->
+			<div id="phone-form" class="row">
+				<div class="col-sm-8 col-sm-offset-2 text-center">
+					<form>
+						<div class="form-group">
+
+							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+							<input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="formData.name">
+                            <input type="text" class="form-control input-lg text-center" placeholder="Phone number" ng-model="formData.phone">
+						</div>
+
+						<!-- createPhone() WILL CREATE NEW Phones -->
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="createPhone()">Add</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>
