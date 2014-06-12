@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Phone book</title>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#todo-list 				{ margin-bottom:30px; font-size:26px; color:blue;}
+		</style>
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="core.js"></script>
+	</head>
+	<body ng-controller="mainController">
+		<div class="container">
+			<div class="jumbotron text-center">
+				<h1> Брой контакти: <span class="label label-warning">{{ todos.length }}</span></h1>
+			</div>
+			<div class="col-sm-6 col-sm-offset-3">
+				<div id="todo-list">
+			<div id="todo-list" class="row">
+				<div class="col-sm-4 col-sm-offset-4">
+					<div class="checkbox" ng-repeat="todo in todos">
+						<label>
+							<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.name }} {{todo.number}}
+						</label>
+					</div>
+
+				</div>
+			</div>
+				</div>
+			</div>
+			<div id="todo-form" class="row">
+				<div class="col-sm-6 col-sm-offset-3 text-center">
+					<form>
+						<div class="form-group">
+							<input type="text" class="form-control input-lg text-center" placeholder="Въведете име на контакт" ng-model="formData.name">
+							<input type="text" class="form-control input-lg text-center" placeholder="Въведете номер на контакт" ng-model="formData.number">
+						</div>
+						<button type="submit" class="btn btn-lg btn-warning" ng-click="createTodo()">Въведи нов контакт</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Angular SPA</title>
+
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#todo-list 				{ margin-bottom:30px; }
+		</style>
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL STUDENTS -->
+	<body ng-controller="mainController">
+		<div class="container">
+
+			<!-- HEADER AND STUDENTS COUNT -->
+			<div class="jumbotron text-center">
+				<h1>Not a phonebook <span class="label label-info">{{ students.length }}</span></h1>
+			</div>
+			
+			<div id="message" class="row alert {{alertClass}}">{{alertMessage}}</div>
+
+			<!-- STUDENTS LIST -->
+			<div id="students-list" class="row">
+				<!-- LOOP OVER THE STUDENTS IN $scope.students -->
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<td><h4>Фак. Номер</h4></td>
+							<td><h4>Студент</h4></td>
+							<td><h4>Шестица</h4></td>
+						</tr>
+					</thead>
+					<tr ng-repeat="student in students">
+						<td>{{student.facNum}}</td>
+						<td><a href={{student.url}} target="_blank">{{student.name}}</a></td>
+						<td>
+							<!--
+							<select>
+								<option value="3" disabled ng-selected="student.grade != 3 || student.grade != 4 || student.grade != 5 || student.grade != 6">2 (Слаб)</option>
+								<option value="3" ng-selected="student.grade == 3">3 (Среден)</option>
+								<option value="4" ng-selected="student.grade == 4">4 (Добир)</option>
+								<option value="5" ng-selected="student.grade == 5">5 (Много добир)</option>
+								<option value="6" ng-selected="student.grade == 6">6 (Отличен)</option>
+							</select>
+							-->
+							<select ng-change="persistGrade(student)" ng-options="item.value as item.description for item in availableGrades" ng-model="student.grade"></select>
+						</td>
+					<tr>
+				</table>
+			</div>
+
+		</div>
+	</body>
+</html>
