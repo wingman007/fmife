@@ -5,7 +5,7 @@ var fmiFe = angular.module('fmiFe', []);
 function mainController($scope, $http) {
 	$scope.formData = {};
 
-	// when landing on the page, get all todos and show them
+	// when landing on the page, get all phonebooks and show them
 	$http.get('/api/phone')
 		.success(function(data) {
 			$scope.phone = data;
