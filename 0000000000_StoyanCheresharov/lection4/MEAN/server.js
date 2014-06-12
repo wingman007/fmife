@@ -10,19 +10,19 @@
 //	mongoose.connect('mongodb://node:node@mongo.onmodulus.net:27017/uwO3mypu'); 	// connect to mongoDB database on modulus.io
 
 	mongoose.connect('mongodb://localhost/test');
-	
+
 	app.configure(function() {
 		app.use(express.static(__dirname + '/public')); 		// set the static files location /public/img will be /img for users
 		app.use(express.logger('dev')); 						// log every request to the console
 		app.use(express.bodyParser()); 							// pull information from html in POST
 	});
-	
+
 	// 2) Mongo model
 	// define model ================= That is all we want. Just the text for the todo. MongoDB will automatically generate an _id for each todo that we create also.
 	var Todo = mongoose.model('Todo', {
 		text : String
 	});
-	
+
 	// 3) routes ======================================================================
 
 	// api ---------------------------------------------------------------------
@@ -54,7 +54,7 @@
 		});
 	});
 	// ----------------------- End Extra Update --------------------------
-	
+
 	// create todo and send back all todos after creation
 	app.post('/api/todos', function(req, res) {
 
@@ -97,7 +97,7 @@
 	app.get('*', function(req, res) {
 		res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
 	});
-	
+
 	// listen (start app with node server.js) ======================================
 	app.listen(8081);
 	console.log("App listening on port 8081");

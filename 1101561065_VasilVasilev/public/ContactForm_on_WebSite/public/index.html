@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html data-ng-app="fmiFe" class="no-js" lang="en">
+    <head>
+        <title>linkin park fan site</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="linkin park fan site">
+        <meta name="keywords" content="Linkin Park, Fan site">
+        <meta name="author" content="Vasil Vasilev">
+        <meta charset="UTF-8">
+
+        <link href='http://fonts.googleapis.com/css?family=Comfortaa:400,700' rel='stylesheet' type='text/css'>
+
+        <!-- CSS Bootstrap & Custom -->
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">  
+        <link href="slider/flexslider.css" rel="stylesheet" type="text/css" media="screen" />
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+
+        <!-- We have to install AngulaJS in this page -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="core.js"></script>
+
+        <!-- Modernizr -->
+        <script src="slider/modernizr.js"></script>
+        <!-- HTML 5 shim for IE backwards compatibility -->
+        <!-- [if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+        </script>
+        <![endif]-->
+    </head>
+    <body ng-controller="mainController">
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">    
+            <div class="container">
+                <div class="row">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a rel="nofollow" href="http://Linkinpark.com" class="navbar-brand"><img src="images/LpLogo.gif" alt="Linkin Park"></a>
+                        </div>
+
+                    </div>        
+
+                    <div class="col-md-10 col-sm-10 col-xs-12">
+                        <div class="navbar-collapse collapse menu">          
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#home" ><i class="fa fa-home" ></i>Home</a></li>
+                                <li><a href="#about"><i class="fa fa-user"></i>About Us</a></li>
+                                <li><a href="#portfolio"><i class="fa fa-music"></i>Studio albums</a></li>
+                                <li><a href="#blog"><i class="fa fa-pencil"></i>Blog</a></li>
+                                <li><a href="#contact"><i class="fa fa-envelope"></i>Contact</a></li>
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div>
+                </div><!-- /.row -->
+            </div>
+        </nav>
+
+        <div class="container" id="home">
+            <div class="row">
+                <div class="col col-md-12">        
+                    <div class="flexslider">
+                        <ul class="slides">
+                            <li>
+                                <img src="images/slide_1.jpg" alt="slide 1" />
+                                <p class="flex-caption">Alfa Romeo City Sound Festival 2014 - Milan, Italy</p>
+                            </li>
+                            <li>
+                                <img src="images/slide_2.jpg" alt="slide 2" />
+                                <p class="flex-caption">Greenfield Festival - Interlaken, Switzerland</p>
+                            </li>
+                            <li>
+                                <img src="images/slide_3.jpg" alt="slide 3"  />
+                                <p class="flex-caption">Download Festival 2014 - Donington Park, United Kingdom</p>
+                            </li>
+                        </ul>
+                    </div>            
+                </div>
+            </div>
+        </div>
+        <section id="about">
+            <div class="outer_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-md-5 col-sm-12"><h1>About us</h1></div>
+                        <div class="col col-md-7 col-sm-12 center-row" id="about_content">
+                            <div class="row center">
+                                <div class="col col-md-4 col-sm-12 templatemo_ceo">
+                                    <img src="images/LOGO_LinkinPark.gif" alt="LINKIN PARK" class="center-block img-circle img-responsive">
+
+                                </div>
+                                <div class="col col-md-8 col-sm-12">
+                                    <p>Linkin Park is an American rock band from Agoura Hills, California. Formed in 1996, the band rose to international fame with their debut album Hybrid Theory, which was certified Diamond by the RIAA in 2005 and multi-platinum in several other countries. Their following studio album Meteora, continued the band's success, topping the Billboard 200 album chart in 2003, and was followed by extensive touring and charity work around the world. In 2003, MTV2 named Linkin Park the sixth-greatest band of the music video era and the third-best of the new millennium. Billboard ranked Linkin Park No. 19 on the Best Artists of the Decade chart. The band was recently voted as the greatest artist of '00s in a Bracket Madness poll on VH1.</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="team">
+            <div class="outer_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-md-5 col-md-push-7 col-sm-12"><h1>Members</h1>
+                            <br>
+                            <audio controls autoplay loop><source src="mp3/Linkin Park-Until It's Gone.mp3" type="audio/mpeg"></audio>
+                            <br>
+                            <ul>
+                                <li>Chester Bennington – vocals (1999–present)</li>               
+                                <li>Rob Bourdon – drums, percussion (1996–present)</li>
+                                <li>Brad Delson – lead guitar, keyboards (1996–present), bass (1998, 1999-2001)</li>
+                                <li>Dave Farrell "Phoenix" – bass guitar, backing vocals (1996–1998, 2001–present)</li>
+                                <li>Joe Hahn "Mr. Hahn" – turntables, samples, programming, keyboards, backing vocals (1996–present)</li>
+                                <li>Mike Shinoda – vocals, rhythm guitar, keyboards, piano (1996–present)</li>
+
+                            </ul></div>
+                        <div class="col col-md-7 col-md-pull-5 col-sm-12 center-row" id="team_content">
+
+                            <div class="row center">
+                                <div class="col col-md-4 col-sm-4 col-xs-4">
+                                    <a href="http://en.wikipedia.org/wiki/Chester_Bennington" ><img src="images/Chester Bennington_image.jpg" alt="Chester" class="img-circle img-responsive"></a>
+                                    <p>Chester</p>
+                                    <p>Bennington</p>
+                                </div>
+                                <div class="col col-md-4 col-sm-4 col-xs-4">
+                                    <a href="http://linkinpark.wikia.com/wiki/Rob_Bourdon"><img src="images/Rob Bourdon_image.jpg" alt="Rob" class="img-circle img-responsive"></a>
+                                    <p>Rob</p>
+                                    <p>Bourdon</p>
+                                </div>        
+                                <div class="col col-md-4 col-sm-4 col-xs-4">
+                                    <a href="http://en.wikipedia.org/wiki/Brad_Delson"><img src="images/Brad Delson_image.jpg" alt="Brad" class="img-circle img-responsive"></a>
+                                    <p>Brad</p>
+                                    <p>Delson</p>
+                                </div>
+                                <div class="col col-md-4 col-sm-4 col-xs-4">
+                                    <a href="http://simple.wikipedia.org/wiki/Dave_Farrell"><img src="images/Dave Farrell_image.jpg" alt="Dave" class="img-circle img-responsive"></a>
+                                    <p>Dave</p>
+                                    <p>Farrell</p>
+                                </div> 
+                                <div class="col col-md-4 col-sm-4 col-xs-4">
+                                    <a href="http://en.wikipedia.org/wiki/Joe_Hahn"><img src="images/Joe Hahn_image.jpg" alt="Joe" class="img-circle img-responsive"></a>
+                                    <p>Joe</p>
+                                    <p>Hahn</p>
+                                </div> 
+                                <div class="col col-md-4 col-sm-4 col-xs-4">
+                                    <a href="http://en.wikipedia.org/wiki/Mike_Shinoda"><img src="images/Mike Shinoda_image.jpg" alt="Mike" class="img-circle img-responsive"></a>
+                                    <p>Mike</p>
+                                    <p>Shinoda</p>
+                                </div> 
+                            </div>        
+                        </div>        
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="portfolio">
+            <div class="outer_container">
+                <div class="container">
+                    <div class="row">      
+                        <div class="col col-md-5 col-sm-12"><h1>Albums</h1></div>
+                        <div class="col col-md-7 col-sm-12" id="portfolio_content">
+                            <div class="row">
+                                <div class="col col-md-4 col-sm-4 col-xs-6">
+                                    <div class="portfolio-item">                  
+                                        <div class="portfolio-thumb">
+                                            <img src="images/Linkin_Park,_The_Hunting_Party,_album_art_final.jpg" alt="The Hunting Party" class="img-responsive">
+                                            <div class="overlay-p">
+                                                <a href="#">
+                                                    <h2>The Hunting Party</h2>
+                                                    <p>Release: June 17, 2014.</p>
+                                                    <p> Label: Warner Bros./Machine Shop</p>
+                                                    <p> Formats: CD, LP, Download</p> 
+                                                </a>
+                                            </div>
+                                        </div>                     
+                                    </div>      
+                                </div>
+                                <div class="col col-md-4 col-sm-4 col-xs-6">  
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">              
+                                            <img src="images/220px-Linkin_Park_-_Living_Things.jpg" alt="Living Things" class="img-responsive">
+                                            <div class="overlay-p">
+                                                <a href="#">
+                                                    <h2>Living Things</h2>
+                                                    <p>Release: June 20, 2012</p> 
+                                                    <p>Label: Warner Bros./Machine Shop</p> 
+                                                    <p>Formats: CD, LP, Download</p> 
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-4 col-sm-4 col-xs-6">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="images/220px-A_Thousand_Suns_Cover2.jpg" alt="A Thousand Suns" class="img-responsive">
+                                            <div class="overlay-p">
+                                                <a href="#">
+                                                    <h2>A Thousand Suns</h2>
+                                                    <p>Release: September 8, 2010</p> 
+                                                    <p> Label: Warner Bros./Machine Shop</p> 
+                                                    <p> Formats: CD, LP, Download</p> 
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-4 col-sm-4 col-xs-6">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="images/220px-Minutes_to_Midnight_cover.jpg" alt="Minutes to Midnight" class="img-responsive">
+                                            <div class="overlay-p">
+                                                <a href="#">
+                                                    <h2>Minutes to Midnight</h2>
+                                                    <p>Release: May 14, 2007</p> 
+                                                    <p> Label: Warner Bros./Machine Shop</p> 
+                                                    <p>  Formats: CD, LP, Download</p> 
+                                                </a>
+                                            </div>
+                                        </div>                  
+                                    </div>      
+                                </div>
+                                <div class="col col-md-4 col-sm-4 col-xs-6">  
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">              
+                                            <img src="images/220px-MeteoraLP.jpg" alt="Meteora" class="img-responsive">
+                                            <div class="overlay-p">
+                                                <a href="#">
+                                                    <h2>Meteora</h2>
+                                                    <p>Release: March 25, 2003</p> 
+                                                    <p> Label: Warner Bros.</p> 
+                                                    <p>  Formats: CD, CS, LP, Download</p> 
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-md-4 col-sm-4 col-xs-6">
+                                    <div class="portfolio-item">
+                                        <div class="portfolio-thumb">
+                                            <img src="images/220px-Linkin_park_hybrid_theory.jpg" alt="Hybrid Theory" class="img-responsive">
+                                            <div class="overlay-p">
+                                                <a href="#">
+                                                    <h2>Hybrid Theory</h2>
+                                                    <p>Release: October 24, 2000</p> 
+                                                    <p> Label: Warner Bros.</p> 
+                                                    <p>  Formats: CD, CS, LP, Download</p> 
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                            </div>          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="blog">
+            <div class="outer_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-md-5 col-md-push-7 col-sm-12"><h1>Blogs</h1></div>
+                        <div class="col col-md-7 col-md-pull-5 col-sm-12">
+                            <div class="blog_posts_container">
+                                <div class="blog_post">
+                                    <a href="http://mikeshinoda.com/"><h2>Mike Shinoda's Blog</h2></a>
+                                    <a href="http://mikeshinoda.com/"><img src="images/mikes++hinoda.jpg" alt="Blog Post 1" class="img-responsive"></a>
+                                </div>    
+                                <div class="blog_post">
+                                    <a href="http://instagram.com/mrjoehahn"><h2>Joe Hahn's Blog</h2></a>     
+                                    <a href="http://instagram.com/mrjoehahn"><img src="images/Joe+Hahn.jpg" alt="Blog Post 2" class="img-responsive"></a>
+                                </div>
+                            </div>          
+                        </div>              
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="contact">
+
+            <div class="outer_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-md-5 col-sm-12"><h1>Contact</h1></div>
+                        <div class="col col-md-7 col-sm-12 col-xs-12 center-row" id="contact_content">
+
+                            <form  class="center">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input name="fullname" type="text" class="form-control" id="input_name" placeholder="Name..." ng-model="formData.Fname">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input name="email" type="email" class="form-control" id="input_email" placeholder="Email..." ng-model="formData.Email">
+                                        </div>                
+                                    </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <textarea name="message" rows="3" class="form-control" id="input_message" placeholder="Message..."ng-model="formData.Message" ></textarea><br>
+                                            <button type="submit" class="btn btn-primary btn-lg" ng-click="createContact()">Add</button>
+                                        </div>
+                                        <div id="contact-list" class="row">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Remove</th>
+                                                        <th>Name</th>
+                                                        <th>Email</th>
+                                                        <th>Message</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="contact in contacts">
+                                                        <td><input type="checkbox" ng-click="deleteContact(contact._id)"></td>
+                                                        <td>{{ contact.Fname}}</td>
+                                                        <td>{{ contact.Email}}</td>
+                                                        <td>{{ contact.Message}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>						
+                                        </div>
+                                    </div>
+                                </div> <!-- row -->
+                            </form>  
+                        </div>
+                    </div>
+                </div>              
+            </div>          
+        </section>
+        <section id="map">
+            <div class="outer_container">
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-md-5 col-md-push-7 col-sm-12"><h1>Map</h1></div>
+                        <div class="col col-md-7 col-md-pull-5 col-sm-12">
+                            <div id="google_map">
+                            </div>
+                            <p>Machine Shop Recordings</p>
+                        </div>              
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <div class="container">        
+                <div class="row">
+                    <div class="col col-md-6 col-sm-6 col-xs-6 col-xxs">
+                        <img src="images/LpLogo.gif" alt="Linkin Park">
+                        <div>
+                            <p>Copyright © 2014 1101561065 Vasil Vasilev</p>
+                        </div>
+                    </div>        
+                    <div class="col col-md-6 col-sm-6 col-xs-6 col-xxs">
+                        <div class="pull-right">
+                            <div class="social_buttons">
+                                <a href="https://www.facebook.com/linkinPark?fref=ts" rel="nofollow" class="icon-button facebook"><i class="fa fa-facebook"></i></a>
+                                <a href="https://twitter.com/linkinpark" rel="nofollow" class="icon-button twitter"><i class="fa fa-twitter"></i></a>             
+                                <a href="https://www.youtube.com/user/linkinparktv" rel="nofollow" class="icon-button youtube"><i class="fa fa-youtube"></i></a>
+                            </div>
+                            <a href="#" id="go-top"><div class="back_to_top">Back To Top</div></a>
+                        </div>            
+                    </div>
+                </div> 
+            </div>
+        </footer>
+
+        <!-- JavaScripts -->
+        <script src="js/jquery.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+        <script src="js/jquery.singlePageNav.js"></script>
+        <script src="js/custom.js"></script>
+        <script defer src="slider/jquery.flexslider.js"></script>
+
+        <script type="text/javascript">
+
+                                                    $(window).load(function() {
+                                                        $('.flexslider').flexslider({
+                                                            animation: "slide",
+                                                            start: function(slider) {
+                                                                $('body').removeClass('loading');
+                                                                $('.menu').singlePageNav();
+                                                            }
+                                                        });
+                                                    });
+
+                                                    $('#go-top').click(function(event) {
+                                                        event.preventDefault();
+                                                        jQuery('html, body').animate({scrollTop: 0}, 1000);
+                                                        return false;
+                                                    });
+
+        </script>
+    </body>
+</html>
