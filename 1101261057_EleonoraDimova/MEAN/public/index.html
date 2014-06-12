@@ -39,11 +39,12 @@
 
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
 	<body ng-controller="mainController">
+	<body background="wallpaper-2446558.jpg">
 		<div class="container">
 
 			<!-- HEADER AND TODO COUNT -->
 			<div class="jumbotron text-center">
-				<h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+				<h1>Phonebook<span class="label label-info">{{ todos.length }}</span></h1>
 			</div>
 
 			<!-- TODO LIST -->
@@ -56,9 +57,10 @@
 							<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
 						</label>
 					</div>
-
+	
 				</div>
 			</div>
+		
 
 			<!-- FORM TO CREATE TODOS -->
 			<div id="todo-form" class="row">
@@ -67,7 +69,7 @@
 						<div class="form-group">
 
 							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-							<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+							<input type="text" class="form-control input-lg text-center" placeholder="Insert Name and Phone number" ng-model="formData.text">
 						</div>
 
 						<!-- createToDo() WILL CREATE NEW TODOS -->
@@ -77,5 +79,6 @@
 			</div>
 
 		</div>
+		
 	</body>
 </html>
