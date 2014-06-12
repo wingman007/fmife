@@ -1,0 +1,98 @@
+<span id="popover-contanier"></span>
+<div class="col-md-5">
+
+    <form role="form" name="userForm">
+        <div class="form-group">
+            <input type="text" class="form-control" id="first-name" placeholder="First Name" data-ng-model="newPerson.first_name" required data-ng-minlength=3 name="firstName" />
+            <div class="form-error" data-ng-show="userForm.firstName.$dirty && userForm.firstName.$invalid">
+                <small class="error" data-ng-show="userForm.firstName.$error.minlength">
+                    First name must be at least 3 characters
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="last-name" placeholder="Last Name" data-ng-model="newPerson.last_name" required data-ng-minlength=3 name="lastName" />
+            <div class="form-error" data-ng-show="userForm.lastName.$dirty && userForm.lastName.$invalid">
+                <small class="error" data-ng-show="userForm.lastName.$error.minlength">
+                    Last name must be at least 3 characters
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="phone" placeholder="Phone number" data-ng-model="newPerson.phone_number" required data-ng-pattern="/^\+?(\d+|\s+)+$/" name="phoneNumber">
+            <div class="form-error" data-ng-show="userForm.phoneNumber.$dirty && userForm.phoneNumber.$invalid">
+                <small class="error" data-ng-show="userForm.phoneNumber.$error.pattern">
+                    Phone number must contain only digits 0-9 and +
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="address" placeholder="Address" data-ng-model="newPerson.address">
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" id="email" placeholder="E-mail" data-ng-model="newPerson.e_mail" name="email">
+            <div class="form-error" data-ng-show="userForm.email.$dirty && userForm.email.$invalid">
+                <small class="error">
+                    e.g. example@gmail.com
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <p class="help-block">Choose an image:</p>
+            <select id="selectImage" class="image-picker" data-ng-init="newPerson.image = 'female0.png'" data-ng-model="newPerson.image">
+                <option data-img-src='img/female0.png' value='female0.png'>female0.png</option>
+                <option data-img-src='img/female1.png' value='female1.png'>female1.png</option>
+                <option data-img-src='img/female2.png' value='female2.png'>female2.png</option>
+                <option data-img-src='img/male0.png' value='male0.png'>male0.png</option>
+                <option data-img-src='img/male1.png' value='male1.png'>male1.png</option>
+                <option data-img-src='img/male2.png' value='male2.png'>male2.png</option>
+            </select>
+            <!--h1>{{newPerson.image}}</h1-->
+        </div>
+        <button type="submit" class="btn btn-lg btn-danger btn-block" data-ng-click="addNewPerson()" data-ng-disabled="userForm.$invalid">Add</button>
+
+    </form>
+
+    <!--div class="divider"></div-->
+</div>
+<div class="col-md-1 midCol">
+    <div id="column-separator"></div>
+</div>
+<div class="col-md-6 rightCol">
+    <div class="input-group">
+        <span class="input-group-addon" id="filter-style"><span class="glyphicon glyphicon-filter"></span></span>
+        <input type="text" id="filter" class="form-control" placeholder="Type to Filter" data-ng-model="search">
+    </div>
+
+    <div class="row list-container animate" data-ng-repeat="person in people | filter:search" data-my-post-repeat-directive>
+        <div class="col-xs-3 list-photo-wraper">
+            <span class="image-wrap">
+                <img class="list-photo" data-ng-src="img/{{person.image}}" alt="progfile image"  />
+            </span>
+        </div>
+        <div class="col-xs-9 list-info-wrapper">
+            <span class="list-info-edit">
+                <a href="javascript:void(0)" confirm-button="saveChanges(person._id)" message="Click Cancel to close" title="EDIT" position="left" yes="Save" no="Cancel" edit="true" data-fname="{{person.first_name}}" lname="{{person.last_name}}" phone="{{person.phone_number}}" addr="{{person.address}}" mail="{{person.e_mail}}">
+                    <span class="glyphicon glyphicon-pencil"></span> EDIT
+            </a>
+            <!--h1>{{editPerson.fname}}</h1-->
+            </span>
+            <span class="list-info-delete">
+                <a href="javascript:void(0)" confirm-button="deletePerson(person._id)" title="DELETE" message="Are you sure?" yes="Yes" no="No" >
+                    <span class="glyphicon glyphicon-remove"></span>
+            </a>
+            </span>
+            <hr class="line" />
+            <div class="list-details">
+                <!--div >{{person._id}}</div-->
+                <div class="list-f-name">{{person.first_name}}</div>
+                <div class="list-l-name">{{person.last_name}}</div>
+                <div class="list-phone">{{person.phone_number}}</div>
+                <div class="list-address">{{person.address}}</div>
+                <span class="list-email">
+                    <a class="list-emal-link" href="mailto:example@gmail.com">{{person.e_mail}}</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
