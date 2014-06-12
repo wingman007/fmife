@@ -1,0 +1,11 @@
+{
+	"name"         : "node-mybook",
+	"version"      : "0.0.0",
+	"description"  : "My Book application.",
+	"main"         : "server.js",
+	"author"       : "Nikola Vasilev",
+	"dependencies" : {
+		"express"    : "~3.4.4",
+		"mongoose"   : "~3.6.2"
+	}
+}
