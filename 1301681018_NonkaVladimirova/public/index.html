@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Angular Phonebook</title>
+
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">		
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+        <link href="Style.css" rel="stylesheet" />
+	</head>
+
+	<body ng-controller="mainController">
+		<div class="container">
+
+			<!-- HEADER AND CONTACT COUNT -->
+            <div class="page-header">
+                <h1>I'm your Phonebook <small>contacts  </small><span class="label label-info"> {{contacts.length }}</span></h1>
+            </div>
+
+			<!-- CONTACT LIST -->
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">Phonebook</div>                
+
+                <!-- Table -->
+                <table class="table" ">
+                    <tr>
+                        <td>Delete</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Number</td>
+                    </tr>
+                    <tr ng-repeat="contact in contacts">
+                        <td><input type="checkbox" ng-click="deleteContact(contact._id)"></td>
+                        <td>{{ contact.name }}</td>
+                        <td><a href="mailto:#">{{contact.email}}</a></td>
+                        <td>{{ contact.number }}</td>
+                        
+                    </tr>
+                </table>
+            </div>
+
+
+
+			<!-- CREATE CONTACTS -->
+			<div id="addContact-form" class="row" style="text-align:center">
+				<div class="">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+
+                            <input type="text" class="form-control input-lg text-center" placeholder="Name" ng-model="formData.name"> <!-- Method.//name// -->                           
+                            <input type="text" class="form-control input-lg text-center" placeholder="Email" ng-model="formData.email"> <!-- Method.//name// -->
+                            <input type="text" class="form-control input-lg text-center" placeholder="Number" ng-model="formData.number"> <!-- Method.//name// -->
+                        </div>
+
+                        <!-- createContact() WILL CREATE NEW contact -->
+                        <button type="submit" class="btn btn-info btn-lg" ng-click="createContact()">Add</button>
+                    </form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
