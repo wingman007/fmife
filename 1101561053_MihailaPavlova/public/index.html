@@ -1,83 +1,96 @@
 <!DOCTYPE html>
-<!-- ASSIGN OUR ANGULAR MODULE -->
 <html data-ng-app="fmiFe">
-	<head>
-		<meta charset="urf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
-		<title>Simple Phone Book</title>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+        <title>Angular SPA</title>
 
-		<!-- We have to install AngulaJS in this page -->
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-		
-		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		
-		<!-- SCROLLS -->
-		<!-- Latest compiled and minified CSS -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-		<style type="text/css">
-			html 					{ overflow-y:scroll; }
-			body 					{ padding-top:50px; }
-			#record-list 				{ margin-bottom:30px; }
-		</style>
-		
-		<!-- Optional theme -->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+        <!-- We have to install AngulaJS in this page -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 
-		<!-- Latest compiled and minified JavaScript -->
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-		
-		<!-- SPELLS -->
-		<!-- Custom code -->
-		<!-- app.js needs to be included before maincontroller.js -->
-		<script type="text/javascript" src="core.js"></script>
-		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
-	</head>
+        <!-- SCROLLS -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <style type="text/css">
+            html 					{ overflow-y:scroll; }
+            body 					{ padding-top:50px; 
+                        color: white;
+                        background-image: url("images/Wallpapers-abstract-awesome.jpg")}
+            #contact-list                               { margin-bottom:30px;  }
 
-<!-- SET THE CONTROLLER AND GET ALL TODOS -->
-	<body ng-controller="mainController">
-		<div class="container">
+            #color {background-color: #FF8000 !important;}
 
-			<!-- HEADER AND TODO COUNT -->
-			<div class="jumbotron text-center">
-				<h1>PhoneBook <span class="label label-info">{{ records.length }}</span></h1>
-			</div>
+        </style>
 
-			<!-- CONTACT LIST -->
-			<div id="record-list" class="row">
-				<div class="col-sm-4 col-sm-offset-4">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
-					<!-- LOOP OVER THE RECORDS IN $scope.records -->
-					<div class="checkbox" ng-repeat="record in records">
-						<label>
-							<input type="checkbox" ng-click="deleteRecord(record._id)"> {{ record.Name }}
-							<input type="checkbox" ng-click="deleteRecord(record._id)"> {{ record.Number }}
-						</label>
-					</div>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-				</div>
-			</div>
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
-			<!-- FORM TO CREATE CONTACTS -->
-			<div id="record-form" class="row">
-				<div class="col-sm-8 col-sm-offset-2 text-center">
-					<form>
-						<div class="form-group">
+        <!-- SPELLS -->
+        <!-- Custom code -->
+        <!-- app.js needs to be included before maincontroller.js -->
+        <script type="text/javascript" src="core.js"></script>
+        <!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+    </head>
 
-							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-							<input type="text" class="form-control input-lg text-center" placeholder="Въведете име и фамилия" ng-model="formData.Name">
-							<input type="text" class="form-control input-lg text-center" placeholder="Въведете телефонен номер" ng-model="formData.Number">
-						</div>
+    <!-- SET THE CONTROLLER AND GET ALL contacts -->
+    <body ng-controller="mainController">
+        <div class="container">
 
-						<!-- createToDo() WILL CREATE NEW CONTACTS -->
-						<button type="submit" class="btn btn-primary btn-lg" ng-click="createRecord()">Добави</button>
-					</form>
-				</div>
-			</div>
+            <!-- HEADER AND CONTACTS COUNT -->
+            <div class="jumbotron text-center">
+                <div id="color">
+                    <h1>Mihaila's Phonebook <span class="label label-info">{{ contacts.length}}</span></h1>
+                </div>
 
-		</div>
-	</body>
+            </div>
+
+            <!-- CONTACTS LIST -->
+            <div id="contact-list" class="row">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Delete</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="contact in contacts">
+                            <td><input type="checkbox" ng-click="deleteContact(contact._id)"></td>
+                            <td>{{contact.name}}</td>
+                            <td>{{contact.phone}}</td>
+                        </tr>
+                    </tbody>
+                </table>						
+            </div>
+
+            <!-- FORM TO CREATE contacts -->
+            <div id="contact-form" class="row">
+                <div class="col-sm-8 col-sm-offset-2 text-center">
+                    <form>
+                        <div class="form-group">
+
+                            <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+                            <input type="text" class="form-control input-lg text-center" placeholder="enter first name" ng-model="formData.name">
+                            <input type="text" class="form-control input-lg text-center" placeholder="enter phone number" ng-model="formData.phone">
+
+                        </div>
+
+                        <!-- createContacts() WILL CREATE NEW contacts -->
+                        <button type="submit" class="btn btn-primary btn-lg" ng-click="createContact()">Add</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </body>
 </html>
