@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Optimize mobile viewport -->
+		<meta name="keywords" content="phonebook">
+		<meta name="description" content="Simple Phonebook API">
+		<meta name="author" content="Ivan Iliev">
+		<title>Phonebook</title>
+				
+		<link rel="stylesheet" href="css/html5reset-1.6.1.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/main.css">
+		
+		<style type="text/css">
+			body 
+			{
+				background: url(images/spring-colors.jpg);
+				background-repeat: no-repeat;
+				background-attachment:fixed;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover;
+				width:100%;
+				height:100%;
+			};
+		</style>
+	</head>
+	
+	<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+	<body ng-controller="mainController">
+		<div class="container-fluid mainWrapper">
+			
+			<!-- Header -->
+			<div class="row">
+				
+				<div class="col-xs-12 col-md-4">
+					<!-- Navigation -->
+					<nav id="navcontainer" class="navbar" role="navigation">
+						<ul id="navlist" class="nav navbar-nav">
+							<li><a href="index.html">Home</a></li>
+							<li id="active1" class="dropdown">
+								<a href="#" id="current" class="dropdown-toggle">Categories <strong class="caret"></strong></a>
+								<ul id="subnavlist">
+									<li id="subactive"><a href="#" id="subcurrent">Item1</a></li>
+									<li><a href="#">Item2</a></li>
+									<li><a href="#">Item3</a></li>
+								</ul>
+							</li>
+							<li><a href="#">Registration</a></li>
+							<li><a href="#">About Us</a></li>
+						</ul>
+					</nav>
+				</div>
+				
+				<div id="searchCol" class="col-xs-12 col-md-3">
+					<!-- Search -->
+					<section id="SearchSection">
+						<form id="searchbar" class="searchbar">
+							<label for="search" class="labels">Search:</label>
+							<input type="text" name="search" id="search" required/>
+							<button type="submit" name="loginSubmit" value="L">Go</button>
+						</form>
+					</section>
+				</div>
+				
+				<div id="loginSection" class="col-xs-12 col-md-5 loginSection">
+					<!-- Log In and Registration -->
+					<section id="LoginSection">
+						<form id="loginForm" class="form-inline">
+							<label for="username" class="labels">Username:</label>
+							<input type="text" name="username" id="username" required/>
+							<label for="password" class="labels">Password:</label>
+							<input type="password" name="password" id="password" required/>
+							
+							<button type="submit" name="loginSubmit" id="loginSubmit" form="loginForm" value="L">Login</button>
+							<button type="submit" name="registerButton" form="register" value="R" formaction="registration/index.php">Register Now</button>
+						</form>
+					</section>
+				</div>
+				
+			</div>
+			
+			
+			<!-- Main Content -->
+			<div class="row rowSeparator"></div>
+			<div class="row HeaderForMiniDevices"></div>
+			
+			<div class="row">
+				<div class="col-xs-12 col-md-12">
+					
+					<div class="text-center">
+						<h3>Sample Phonebook 
+							<span class="label label-info">{{phoneRecords.length}}</span>
+						</h3>
+							<button type="submit" id="showPhonebookForm" class="btn btn-primary" onclick="showPhoneRow()">Add</button>
+							<button type="submit" id="hidePhonebookForm" class="btn btn-secondary" onclick="hidePhoneRow()">Hide</button>
+						
+					</div>
+					
+					<div>
+						<table id="mainTable" class="table">
+							<thead>
+								<tr>
+									<th>First Name</th>
+									<th>Last Name</th>
+									<th>PhoneNumber</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="phone in phoneRecords">
+									<td>{{phone.Fname}}</td>
+									<td>{{phone.Lname}}</td>
+									<td>{{phone.Number}}</td>
+									<td>
+										<input type="button" class="btn btn-danger" data-ng-click="deletePhoneRecord(phone._id)" value="Delete" />
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+				</div>
+			</div>
+			
+			<!-- FORM TO CREATE TODOS -->
+			<div id="phone-row" class="row">
+				<div class="col-xs-12 col-md-5 col-md-offset-3 text-center">
+					<form id="phonebookForm" class="form-horizontal" role="form">
+						<div class="form-group">
+							<label for="firstName" class="labels control-label col-sm-3">FirstName:</label>
+							<div class="col-sm-9">
+								<input type="text" name="firstName" id="firstName" class="form-control text-center" 
+								placeholder="FirstName" data-ng-model="formData.Fname" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastName" class="labels  control-label col-sm-3">LastName:</label>
+							<div class="col-sm-9">
+								<input type="text" name="lastName" id="lastName" class="form-control text-center" 
+								placeholder="LastName" data-ng-model="formData.Lname" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="phoneNumber" class="labels control-label col-sm-3">PhoneNumber:</label>
+							<div class="col-sm-9">
+								<input type="text" name="phoneNumber" id="phoneNumber" class="form-control text-center" 
+								placeholder="PhoneNumber" data-ng-model="formData.Number" required />
+							</div>
+						</div>
+						
+						<BR/>
+						<div class="col-sm-offset-3 col-sm-9">
+							<button type="submit" id="btnPhoneForm" class="btn btn-primary" data-ng-click="createPhoneRecord()">Add Phone</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			
+			<div class="row rowSeparator"></div>
+			
+			
+			<div class="row">
+				<div class="push"></div> <!-- Should be the last section before the Footer! -->
+			</div>
+			
+		</div> <!-- End of Fluid Container and Main Content -->
+		
+		<!-- Footer -->
+			<div class="footer">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-12 col-md-12">
+							<footer id="footerMenu">
+								<img id="footerLogoRight" src="images/logos/footerLogoRight.png"></img>
+									
+								<!-- Content -->
+								Ivan Iliev, № 1101561002
+									
+								<img id="footerLogoLeft" src="images/logos/footerLogoLeft.png"></img>
+							</footer>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		<!-- Include javascript here for loading the page fast -->
+		<script src="scripts/jquery-1.11.1.min.js"></script>
+		<script src="scripts/jquery-migrate-1.2.1.min.js"></script>
+		<script src="scripts/angular.min.js"></script>
+		<script src="scripts/bootstrap.min.js"></script>
+		<script src="core.js"></script>
+		<script>
+			$(window).load(function(){
+					//Fix the navigation bar
+					$("#searchCol").clone().appendTo(".HeaderForMiniDevices");
+					$("#loginSection").clone().appendTo(".HeaderForMiniDevices");
+
+				});
+			function showPhoneRow(){
+				$("#phone-row").css("display", "initial");
+				$("#btnPhoneForm").focus();
+				$("#firstName").focus();
+			}
+			function hidePhoneRow(){
+				$("#phone-row").css("display", "none");
+			}
+			
+		</script>
+		
+	</body>
+</html>
