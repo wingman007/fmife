@@ -1,4 +1,4 @@
-Welcome to MyBook!	{#welcome}
+Welcome to MyBook!
 =====================
 
 What is this?
