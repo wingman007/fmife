@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Zlatina's Phonebook</title>
+
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#contact-list 			{ margin-bottom:30px; }
+			.form-control{
+				width: 300px;
+				float:left;
+			}
+		</style>
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+	<body ng-controller="mainController">
+		<div class="container">
+
+			<!-- HEADER AND TODO COUNT -->
+			<div class="jumbotron text-center">
+				<h1>This is Zina's phonebook <span class="label label-info">{{ phonebook.length }}</span></h1>
+			</div>
+
+			<!-- TODO LIST -->
+			<div id="contact-list" class="row">
+				<div class="col-sm-4 col-sm-offset-4">
+
+					<!-- LOOP OVER THE TODOS IN $scope.todos -->
+					<table id="content-table" class="table table-striped">
+						<thead>
+							<tr>
+								<th>First Name</th>
+								<th>PhoneNumber</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="contact in phonebook">
+								<td >
+										{{ contact.name }}
+								</td>
+								<td >
+										{{ contact.number }}
+								</td>
+								<td>
+									<input type="button" class="btn btn-danger" ng-click="deleteContact(contact._id)" value="Delete" />
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+			</div>
+
+			<!-- FORM TO CREATE TODOS -->
+			<div id="contact-form" class="row">
+				<div class="col-sm-12 col-sm-offset-2 text-center">
+										
+					<form class="form-horizontal" role="form">
+					  <div class="form-group">
+						<label for="inputEmail3" class="col-sm-2 control-label">Name </label>
+						<div class="col-sm-10">
+						  <input type="text" class="form-control input-lg text-center" id="inputEmail3" placeholder="Name..." ng-model="formData.name">
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="inputPassword3" class="col-sm-2 control-label">Telephone number</label>
+						<div class="col-sm-10">
+						  <input type="text" class="form-control input-lg text-center" id="inputPassword3" placeholder="Telephone number..." ng-model="formData.number">
+						</div>
+					  </div>
+					  
+					  <div class="form-group">
+						<div class="col-sm-offset-1 col-sm-5">
+						  <button type="submit" class="btn btn-warning btn-lg" ng-click="createContact()"><span class="glyphicon glyphicon-pencil"></span> Add</button>
+						</div>
+					  </div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</body>
+</html>
