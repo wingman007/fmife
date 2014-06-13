@@ -1,5 +1,5 @@
 {
-	"name"         : "ContactBook",
+	"name"         : "AddressBook",
 	"version"      : "1.0.0",
 	"description"  : "This is a simple contact book.",
 	"main"         : "server.js",
