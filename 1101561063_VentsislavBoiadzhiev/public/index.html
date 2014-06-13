@@ -64,8 +64,8 @@
 							
 								<div class="btn">
 
-									<tr ng-repeat="items in records">
-									<td><button type="button" class="btn btn-primary btn-lg" ng-click="deleteRecord(record._id)">Del</td>					
+									<tr ng-repeat="record in register ">
+									<td><button type="button" class="btn btn-primary btn-lg" ng-click="deleteReg(record._id)">Del</td>					
 									  
 									  <td>{{ record.name}}</td>
 									  <td>{{ record.mail }}</td>
