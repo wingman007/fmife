@@ -44,7 +44,7 @@
 
 			<!-- HEADER AND ADDRESS COUNT -->
 			<div class="jumbotron text-center">
-				<h1>Not a bad address book<span class="label label-info">{{ addresses.length }}</span></h1>
+				<h1>Not a bad address book<span class="label label-info">{{ addressBook.length }}</span></h1>
 			</div>
 			<table id="content-table" class="table table-striped">
 			<thead>
@@ -57,16 +57,16 @@
 			<tbody>
 				<tr ng-repeat="entry in entries">
 					<td >
-							{{ entry.fName }}
+							{{ addressBook.fName }}
 					</td>
 					<td >
-							{{ entry.fName }}
+							{{ addressBook.fName }}
 					</td>
 					<td >
-							{{ entry.address }} 
+							{{ addressBook.address }} 
 					</td>
 					<td>
-						<input type="button" class="btn btn-danger" ng-click="deleteAddress(entry._id)" value="delete" />
+						<input type="button" class="btn btn-danger" ng-click="deleteAddress(addressBook._id)" value="delete" />
 					</td>
 				</tr>
 			</tbody>

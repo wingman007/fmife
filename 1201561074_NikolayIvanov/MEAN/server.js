@@ -32,13 +32,13 @@
 	app.get('/api/addressBook', function(req, res) {
 
 		// use mongoose to get all addresses in the database
-		AddressBook.find(function(err, AddressBooks) {
+		AddressBook.find(function(err, addressBook) {
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
 
-			res.json(AddressBooks); // return all address in JSON format
+			res.json(addressBook); // return all address in JSON format
 		});
 	});
 
@@ -66,11 +66,11 @@
 	});
 
 	// delete an Address
-	app.delete('/api/addressBook:AddressBook_id', function(req, res) {
-		console.log(req.params.AddressBook_id);
+	app.delete('/api/addressBook:addressBook_id', function(req, res) {
+		console.log(req.params.addressBook_id);
 		
 		AddressBook.remove({
-			_id : req.params.AddressBook_id
+			_id : req.params.addressBook_id
 		}, function(err, deletedAddresses) {
 			if (err){
 				console.log('rowsDeleted \n' + rowsDeleted);
