@@ -56,10 +56,10 @@
 				res.send(err);
 			} console.log('Added addresses: \n' + addedAddress)
 			// get and return all the addresses after you create another
-			AddressBook.find(function(err, addresses) {
+			AddressBook.find(function(err, addressBook) {
 				if (err)
 					res.send(err)
-				res.json(addresses);
+				res.json(addressBook);
 			});
 		});
 
@@ -71,16 +71,16 @@
 		
 		AddressBook.remove({
 			_id : req.params.addressBook_id
-		}, function(err, deletedAddresses) {
+		}, function(err, deletedaddressBook) {
 			if (err){
 				console.log('rowsDeleted \n' + rowsDeleted);
 				res.send(err);
 			}
-			// get and return all the addresses after you create another
-			AddressBook.find(function(err, addresses) {
+			// get and return all the addressBook after you create another
+			AddressBook.find(function(err, addressBook) {
 				if (err)
 					res.send(err)
-				res.json(addresses);
+				res.json(addressBook);
 			});
 		});
 	});

@@ -8,7 +8,7 @@ function mainController($scope, $http) {
 	// when landing on the page, get all todos and show them
 	$http.get('/api/addressBook')
 		.success(function(data) {
-			$scope.addresses = data;
+			$scope.addressBook = data;
 			console.log(data);
 		})
 		.error(function(data) {
@@ -22,7 +22,7 @@ function mainController($scope, $http) {
 					$http.post('/api/addressBook', $scope.formData)
 						.success(function(data) {
 							$scope.formData = {}; // clear the form so our user is ready to enter another
-							$scope.addresses = data;
+							$scope.addressBook = data;
 							console.log(data);
 						})
 						.error(function(data) {
@@ -39,7 +39,7 @@ function mainController($scope, $http) {
 		if (confirm('Are you sure you want to delete that address?')){
 			$http.delete('/api/addressBook/'+ id)
 				.success(function(data) {
-					$scope.addresses = data;
+					$scope.addressBook = data;
 					console.log(data);
 				})
 				.error(function(data) {
