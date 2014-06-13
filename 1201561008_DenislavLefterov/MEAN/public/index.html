@@ -44,7 +44,7 @@
 
 			<!-- HEADER AND GUEST COUNT -->
 			<div class="jumbotron text-center">
-				<h1>Feels great to use a guestBook<span class="label label-info">{{ guest.length }}</span></h1>
+				<h1>Feels great to use a guestBook<span class="label label-info">{{ guestBook.length }}</span></h1>
 			</div>
 			<table id="content-table" class="table table-striped">
 			<thead>
@@ -58,19 +58,19 @@
 			<tbody>
 				<tr ng-repeat="entry in entries">
 					<td >
-							{{ entry.fName }}
+							{{ guestBook.fName }}
 					</td>
 					<td >
-							{{ entry.fName }}
+							{{ guestBook.fName }}
 					</td>
 					<td >
-							{{ entry.description }} 
+							{{ guestBook.description }} 
 					<td >
-							{{ entry.complain }} 
+							{{ guestBook.complain }} 
 					</td>
 					</td>
 					<td>
-						<input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="delete" />
+						<input type="button" class="btn btn-danger" ng-click="deleteGuest(guestBook._id)" value="delete" />
 					</td>
 				</tr>
 			</tbody>
@@ -90,7 +90,7 @@
 						</div>
 
 						<!-- createGuest() WILL CREATE NEW GUEST -->
-						<button type="submit" class="btn btn-primary btn-lg" ng-click="createEntry()">Add</button>
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="createGuest()">Add</button>
 					</form>
 				</div>
 			</div>

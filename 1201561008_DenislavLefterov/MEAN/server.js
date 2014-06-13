@@ -22,7 +22,7 @@
 	var GuestBook = mongoose.model('GuestBook', {
 		fName : String,
 		lName: String,
-		description: String
+		description: String,
 		complain:String
 		});
 	
@@ -33,13 +33,13 @@
 	app.get('/api/guestBook', function(req, res) {
 
 		// use mongoose to get all guests in the database
-		GuestBook.find(function(err, GuestBooks) {
+		GuestBook.find(function(err, guestBook) {
 
 			// if there is an error retrieving, send the error. nothing after res.send(err) will execute
 			if (err)
 				res.send(err)
 
-			res.json(GuestBooks); // return all guests in JSON format
+			res.json(guestBook); // return all guests in JSON format
 		});
 	});
 
@@ -51,7 +51,7 @@
 		GuestBook.create({
 			fName : req.body.fName,
 			lName : req.body.lName,
-			description : req.body.description
+			description : req.body.description,
 			complain : req.body.complain
 		}, function(err, fedGuest) {
 			if (err){
@@ -68,11 +68,11 @@
 	});
 
 	// delete an Guest
-	app.delete('/api/guestBook:GuestBook_id', function(req, res) {
+	app.delete('/api/guestBook:guestBook_id', function(req, res) {
 		console.log(req.params.GuestBook_id);
 		
 		GuestBook.remove({
-			_id : req.params.GuestBook_id
+			_id : req.params.guestBook_id
 		}, function(err, deletedGuests) {
 			if (err){
 				console.log('rowsDeleted \n' + rowsDeleted);
@@ -89,7 +89,7 @@
 	
 	// listen (start app with node server.js) ======================================
 	app.listen(8008);
-	console.log("App listening on port 8074");
+	console.log("App listening on port 8008");
 
 /*
 http://mongoosejs.com/docs/api.html#model_Model.findOneAndUpdate
