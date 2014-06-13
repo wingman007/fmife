@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html data-ng-app="fmiFe">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Angular Phonebook</title>
+
+<!-- ANGULARJS & JQUERY -->
+<script type="text/javascript" src="js/angular.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<!-- BOOTSTRAP -->
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="js/custom.js"></script>
+</head>
+<body data-ng-controller="mainController">
+<div class="container" style = "text-align: center;">
+<div class="starter-template">
+<div class="jumbotron">
+  <h1 class="cover-heading">PHONEBOOK</h1>
+<!-- <p class="lead">With {{ contacts.length }} contacts!</p> -->
+</div>
+
+<!-- PHONEBOOK -->
+<!-- ADD CONTACT -->
+<form class="form-inline" role="form">
+<div class="form-group has-succes has-feedback">
+<input type="text" class="form-control" id="name" placeholder="Enter name" data-ng-model="formData.name">
+</div>
+<div class="form-group has-succes has-feedback">
+  <div class="form-group has-succes has-feedback">
+    <input type="text" class="form-control" id="phone" placeholder="Enter phone" data-ng-model="formData.phone">
+  </div>
+</div>
+<button type="button" class="btn btn-success" data-ng-click="createContact()">INSERT</button>
+</form>
+
+<!-- LIST OF CONTACTS -->
+<table class="table" style="text-align: left; vertical-align: middle;">
+<thead>
+<tr>
+<th>#</th>
+<th>NAME</th>
+<th>GSM</th>
+<th>Delete</th>
+</tr>
+</thead>
+<tbody>
+<tr data-ng-repeat="contact in contacts">
+<td class="index"></td>
+<td>{{ contact.name }}</td>
+<td>{{ contact.phone }}</td>
+<td><input type="checkbox" ng-click="deleteContact(contact._id)"></input></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+</body>
+</html>
