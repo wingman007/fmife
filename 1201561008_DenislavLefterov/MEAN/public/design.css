@@ -1,11 +1,16 @@
 .form-control{
-				width: 205px;
+				width: 200px;
 				float:left;
 			}
 #footer {
-	margin-top: 90px;
-	color:#FF0000;
+	margin-top: 120px;
+	color:red;
 	position:fixed;
 	bottom:0px;
 	left:10px;
 }
+
+html 	{ overflow-y:scroll; }
+body { padding-top:50px; }
+#address-list { margin-bottom:30px; }
+			
