@@ -1,31 +1,46 @@
 ﻿<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
 <html data-ng-app="fmiFe">
-<head>
+	<head>
 		<meta charset="urf-8" />
-<title>Dimo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Phone Book</title>
 
-		<!-- jQuery-->
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+
 		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-
-		<!--Boostrap-->
-		<S!-- Latest compiled and minified CSS -->
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#todo-list 				{ margin-bottom:30px; }
+		</style>
 
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<style type="text/css">
-			html 					{ overflow-y:scroll; }
-			body 					{ padding-top:50px; }
-			#todo-list 				{ margin-bottom:30px; }
-		</style>
-</head>
-<body role="document">
 
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+	<body  background="1.png" ng-controller="mainController">
+	
+	
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -41,30 +56,51 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Начало</a></li>
-            <li><a href="#about">Още информация</a></li>
+            <li><a href="more.html">Още информация</a></li>
             <li><a href="#contact">История</a></li>
        </div><!--/.nav-collapse -->
       </div>
     </div>
+	
+		<div class="container">
 
-    <div class="container theme-showcase" role="main">
+			<!-- HEADER AND TODO COUNT -->
+			<div class="jumbotron text-center">
+				<h1>Телефонен указател <span class="label label-info">{{ todos.length }}</span></h1>
+			</div>
 
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>България</h1>
-        <p>Репу̀блика Бълга̀рия е държава в Югоизточна Европа, в източната част на Балканския полуостров и заема 23% от неговата територия. Граничи на север с Румъния; на запад със Сърбия и Република Македония; на юг с Гърция и на югoизток с Турция. На изток, по протежение на бреговата ивица, страната се мие от водите на Черно море. Общата дължина на държавната граница е 2245 км, от които 1181 км са сухоземни, 686 км — речни (главно по река Дунав) и 378 км — морски. Освен континенталната част, България също притежава 62 острова в р. Дунав, от които по-големите са Белене, Козлодуй, Вардим, Батин, Голяма бързина, Люляк и др. и 7 малки острова в Черно Море (Св. Иван, Св. Кирик, Св. Анастасия и други) с обща площ над 100 кв. км. Със своите 111 хил. км2 площ и 7,364 милиона души, България се подрежда на 102-ро и 96-то място съответно по площ и по население в света. По площ България е 11-а в ЕС и 15-а в цяла Европа.
+			<!-- TODO LIST -->
+			<div id="todo-list" class="row">
+				<div class="col-sm-4 col-sm-offset-4">
 
-Най-ранните свидетелства за човешко присъствие по земите на днешна България датират от 44 000 г. преди Христа, или епохата на палеолита. Към петото хилядолетие преди Христа в североизточна България процъфтява високоразвита цивилизация, която създава най-ранните златни украшения в света.</p>
-       
-      </div>
+					<!-- LOOP OVER THE TODOS IN $scope.todos -->
+					<div class="checkbox" ng-repeat="todo in todos">
+						<label>
+							<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
+							<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.number }}
+						</label>
+					</div>
 
+				</div>
+			</div>
 
+			<!-- FORM TO CREATE TODOS -->
+			<div id="todo-form" class="row">
+				<div class="col-sm-8 col-sm-offset-2 text-center">
+					<form>
+						<div class="form-group">
 
-   <footer>
-        <p>&copy; :)</p>
-		
-      </footer>
-    <br><br>
-	</div>
-  </body>
+							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+							<input type="text" class="form-control input-lg text-center" placeholder="Добави име" ng-model="formData.text">
+							<input type="text" class="form-control input-lg text-center" placeholder="Добави телефонен номер" ng-model="formData.number">
+						</div>
+
+						<!-- createToDo() WILL CREATE NEW TODOS -->
+						<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Добави</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
+	</body>
 </html>
