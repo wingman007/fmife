@@ -1,1 +1,1 @@
-Denislav Lefterov 1201561008 GuestBook for Guests.
+Denislav Lefterov's GuestBook.

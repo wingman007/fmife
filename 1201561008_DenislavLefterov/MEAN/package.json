@@ -1,7 +1,7 @@
 {
 	"name"         : "GuestBook",
-	"version"      : "1.0.1",
-	"description"  : "This is a GuestBook for users.",
+	"version"      : "1.0.0",
+	"description"  : "A great GuesBook.",
 	"main"         : "server.js",
 	"author"       : "Denislav Lefterov 1201561008",
 	"dependencies" : {

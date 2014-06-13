@@ -4,23 +4,19 @@
 	<head>
 		<meta charset="urf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
-		<title>Great Guest Book</title>
+		<title>A GuestBook</title>
 
 		<!-- We have to install AngulaJS in this page -->
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-		
+
 		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		
+
 		<!-- SCROLLS -->
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-		<style type="text/css">
-			html 					{ overflow-y:scroll; }
-			body 					{ padding-top:55px; }
-			#guest-list 				{ margin-bottom:35px; }
-		</style>
-		
+		<link rel="stylesheet" href="design.css">
+
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
@@ -29,75 +25,92 @@
 
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-		
+
 		<!-- SPELLS -->
 		<!-- Custom code -->
 		<!-- app.js needs to be included before maincontroller.js -->
 		<script type="text/javascript" src="core.js"></script>
 		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
-		<link rel="stylesheet" href="design.css" type="text/css">
 	</head>
 
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
 	<body ng-controller="mainController">
 		<div class="container">
 
-			<!-- HEADER AND GUEST COUNT -->
+			<!-- HEADER AND TODO COUNT -->
 			<div class="jumbotron text-center">
-				<h1>Feels great to use a guestBook<span class="label label-info">{{ guest.length }}</span></h1>
+				<h1>A one great GuestBook <span class="label label-info">{{ guestBook.length }}</span></h1>
 			</div>
-			<table id="content-table" class="table table-striped">
-			<thead>
-				<tr>
-					<th>First Name</th>
-					<th>Last Name</th>
-					<th>Description</th>
-					<th>Complain</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="entry in entries">
-					<td >
-							{{ entry.fName }}
-					</td>
-					<td >
-							{{ entry.fName }}
-					</td>
-					<td >
-							{{ entry.description }} 
-					<td >
-							{{ entry.complain }} 
-					</td>
-					</td>
-					<td>
-						<input type="button" class="btn btn-danger" ng-click="deleteEntry(entry._id)" value="delete" />
-					</td>
-				</tr>
-			</tbody>
-			</table>
 
-			<!-- FORM TO CREATE GUESTS -->
-			<div id="todo-form" class="row">
-				<div class="col-sm-8 col-sm-offset-2 text-center">
-					<form>
-						<div class="form-group">
+			<!-- TODO LIST -->
+			<div id="address-list" class="row">
+				<div class="col-sm-4 col-sm-offset-4">
 
-							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-							<input type="text" required="required" class="form-control input-lg text-center" placeholder="first name" ng-model="formData.fName">
-							<input type="text" required="required" class="form-control input-lg text-center" placeholder="last name" ng-model="formData.lName">
-							<input type="text" required="required" class="form-control input-lg text-center" placeholder="description" ng-model="formData.description">
-							<input type="text" required="required" class="form-control input-lg text-center" placeholder="complain" ng-model="formData.complain">
+					<!-- LOOP OVER THE TODOS IN $scope.todos -->
+					<table id="content-table" class="table table-striped">
+						<thead>
+							<tr>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Complain</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="guest in guestBook">
+								<td >
+										{{ guest.firstName }}
+								</td>
+								<td >
+										{{ guest.lastName }}
+								</td>
+								<td >
+										{{ guest.complainGuest }}
+								</td>
+								<td>
+									<input type="button" class="btn btn-danger" ng-click="deleteGuest(guest._id)" value="Delete" />
+								</td>
+							</tr>
+						</tbody>
+					</table>					
+				</div>
+			</div>
+
+			<!-- FORM TO CREATE TODOS -->
+			<div id="address-form" class="row">
+				<div class="col-sm-12 col-sm-offset-2 text-center">
+										
+					<form class="form-horizontal" role="form">
+					  <div class="form-group">
+						<label for="inputfirstName" class="col-sm-2 control-label">First Name </label>
+						<div class="col-sm-10">
+						  <input type="text" class="form-control input-lg text-center" id="inputfirstName" placeholder="First name" ng-model="formData.firstName">
 						</div>
-
-						<!-- createGuest() WILL CREATE NEW GUEST -->
-						<button type="submit" class="btn btn-primary btn-lg" ng-click="createEntry()">Add</button>
+					  </div>
+					  <div class="form-group">
+						<label for="inputlastName" class="col-sm-2 control-label">Last Name </label>
+						<div class="col-sm-10">
+						  <input type="text" class="form-control input-lg text-center" id="inputlastName" placeholder="Last name" ng-model="formData.lastName">
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="inputcomplain" class="col-sm-2 control-label">Complain</label>
+						<div class="col-sm-10">
+						  <input type="text" class="form-control input-lg text-center" id="inputcomplain" placeholder="Complain" ng-model="formData.complainGuest">
+						</div>
+					  </div>
+					  
+					  <div class="form-group">
+						<div class="col-sm-offset-1 col-sm-5">
+						  <button type="submit" class="btn btn-warning btn-lg" ng-click="createGuest()"><span class="glyphicon glyphicon-pencil"></span> Done</button>
+						</div>
+					  </div>
 					</form>
 				</div>
 			</div>
 
 		</div>
 		<footer id="footer">
-			<div class="muted credit"> Denislav Lefterov's GuestBook <br> Faculty Number: 1201561008</div>
+			<div class="muted credit"> Denislav Lefterov's great GuestBook <br> Faculty number: 1201561008</div>
 		</footer>
 	</body>
 </html>
