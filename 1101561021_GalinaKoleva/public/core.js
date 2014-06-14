@@ -1,5 +1,6 @@
 //all angular code for our app 
 // public/core.js
+
 var fmiFe = angular.module('fmiFe', []);
 
 function mainController($scope, $http) {
