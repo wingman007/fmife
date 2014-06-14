@@ -1,0 +1,38 @@
+html, body, div {
+	margin : 0;
+	padding: 0;
+}
+
+#contact-view {
+	background: #f8f8f8;
+	border-right: solid #dedede 2px;
+}
+
+#form-view {
+	margin: 10px;
+}
+#form-view input[type="text"], input[type="email"] {
+	display: block;
+	width: 500px;
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+.button {
+	background: #4ca5ff;
+	border: 0;
+	color : #fff;
+	padding: 7px;
+}
+
+
+.contact-element {
+	margin: 10px;
+	border-left : solid red 3px;
+	padding-left: 10px;
+}
+
+.contact-element span {
+	display: block;
+	font-size: 20px;
+}
