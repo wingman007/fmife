@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html data-ng-app="fmiFe">
+	<head>
+		<meta charset="urf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+		<title>Angular SPA</title>
+
+		<!-- We have to install AngulaJS in this page -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+		
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#todo-list 				{ margin-bottom:30px; }
+		</style>
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
+		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
+	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+	<body ng-controller="mainController">
+		<div class="container">
+
+			<!-- HEADER AND TODO COUNT -->
+			<div class="jumbotron text-center">
+				<h1>Phonebook <span class="label label-info">{{phones.length}}</span></h1>
+			</div>
+
+
+           
+			<!-- TODO LIST -->
+			<div id="records-list" class="row">
+				<div class="col-sm-4 col-sm-offset-4">
+
+					<!-- LOOP OVER THE TODOS IN $scope.phones -->
+					<div class="checkbox" ng-repeat="phone in phones | filter:query">
+						<label>
+							<input type="checkbox" ng-click="deleteRecord(phone._id)"> {{ phone.name }} {{ phone.phone }}
+						</label>
+					</div>
+
+				</div>
+			</div>
+
+			<!-- FORM TO CREATE RECORD -->
+			<form role="form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control input-lg text-center" id="name" placeholder="Enter name" ng-model="formData.name">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control input-lg text-center" id="phone" placeholder="Enter phone number" ng-model="formData.phone"s >
+                </div>
+
+                <!-- createRecord() WILL CREATE NEW RECORD -->
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="createRecord()">Save</button>
+            </form>
+
+		</div>
+	</body>
+</html>
