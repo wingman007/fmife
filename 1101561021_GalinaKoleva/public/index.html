@@ -11,6 +11,7 @@
 		
 		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        
 		
 		<!-- SCROLLS -->
 		<!-- Latest compiled and minified CSS -->
@@ -48,24 +49,7 @@
 			</div>
 
 			<!-- Phone LIST -->
-			<div id="phone-list" class="row">
-				<table class="table">
-                	<thead>
-                    	<tr>
-                        	<th>Delete</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                    	</tr>
-                        <tbody>
-                            <tr ng-repeat="phone in phones">
-                            	<td><input type="checkbox" ng-click="deletePhone(phone._id)"></td>
-                                <td>{{phone.name}}</td>
-                                <td>{{phone.phone}}</td>
-                            </tr>
-                        </tbody>
-                    </thead>
-				</table>
-			</div>
+			
 
 			<!-- FORM TO CREATE Phones -->
 			<div id="phone-form" class="row">
@@ -83,6 +67,27 @@
 					</form>
 				</div>
 			</div>
+            
+            <div id="phone-list" class="row">
+				<table class="table">
+                	<thead>
+                    	<tr>
+                        	<th>Delete</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                    	</tr>
+                        <tbody>
+                            <tr ng-repeat="phone in phones">
+                            	<td><input type="checkbox" ng-click="deletePhone(phone._id)"></td>
+                                <td>{{phone.name}}</td>
+                                <td>{{phone.phone}}</td>
+                            </tr>
+                        </tbody>
+                    </thead>
+				</table>
+			</div>
+            
+            
 
 		</div>
 	</body>
