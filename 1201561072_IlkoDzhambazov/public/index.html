@@ -1,57 +1,103 @@
 <!DOCTYPE html>
+<!-- ASSIGN OUR ANGULAR MODULE -->
 <html data-ng-app="fmiFe">
 	<head>
 		<meta charset="urf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 		<title>Телефонен указател</title>
+
+		<!-- We have to install AngulaJS in this page -->
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+
 		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+		<!-- SCROLLS -->
+		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 		<style type="text/css">
+			html 					{ overflow-y:scroll; }
+			body 					{ padding-top:50px; }
+			#reg-list 				{ margin-bottom:30px; }
 		</style>
-		<link rel="stylesheet" href="style.css">
+
+		<!-- Optional theme -->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+		<!-- Latest compiled and minified JavaScript -->
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+		<!-- SPELLS -->
+		<!-- Custom code -->
+		<!-- app.js needs to be included before maincontroller.js -->
 		<script type="text/javascript" src="core.js"></script>
+		<!-- <script type="text/javascript" src="maincontroller.js"></script> -->
 	</head>
+
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
 	<body ng-controller="mainController">
 		<div class="container">
-			<div class="text-center">
-			<div class="jumbotron">
-        <h1>Телефонен Указател</h1>
-		<h3>Записвай смело.</h3></p>
-      
-      </div>
-				<h1> Брой контакти<br> <span class="label label-danger">{{ todos.length }}</span></h1>
-			
-	
-					<div id="todo-list" class="row">
-				<div class="col-sm-4 col-sm-offset-4">
 
-					<!-- LOOP OVER THE TODOS IN $scope.todos -->
-					<div class="checkbox" ng-repeat="todo in todos">
-						<label>
-							<button type="delete"  class="btn btn-lg btn-success" ng-click="deleteTodo(todo._id)"> Изтрий </button>
-						</label>
+			<!-- HEADER AND TODO COUNT -->
+			<div class="jumbotron text-center">
+				<h1>Телефонен Указател</h1><br><h3>Записвай смело</h3><h2><span class="label label-info">{{register.length}}</span></h2>
+			</div>
+
+			<!-- TODO LIST -->
+			<div id="reg-list" class="row">
+				<div class="col-sm-4 col-sm-offset-4">
+					<div class="table">
+							<table class="table table-striped">
+
+									<thead>
+									
+										<tr>
+											<th>Name</th> 
+										  <th>Phone</th>
+										</tr>
+								 </thead>
+
+								 <tbody>
+
+								<div class="btn">
+
+									<tr ng-repeat="record in register ">
+									
+									  <td>{{ record.name}}</td>
+									  <td>{{ record.phone }}</td>
+									  <td><button type="button"  class="btn btn-lg btn-danger" ng-click="deleteReg(record._id)">Изтрий</button>	<td>			
+									</tr>
+								</div>
+								</tbody>
+
+						</table>
 					</div>
 
+
+
 				</div>
 			</div>
+
+			<!-- FORM TO CREATE TODOS -->
+			<div id="reg-form" class="row">
+				<div class="col-sm-8 col-sm-offset-2 text-center">
 					<form>
 						<div class="form-group">
-							<input type="text" class="form-control input-lg text-left" placeholder="Въведете име " ng-model="formData.name">
-							<br><input type="text" class="form-control input-lg text-left" placeholder="Въведете номер" ng-model="formData.phone">
-					
+
+							<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+							<input type="text" class="form-control input-lg text-center" placeholder="Въведи име" ng-model="formData.name">
+							<input type="text" class="form-control input-lg text-center" placeholder="Въведи номер" ng-model="formData.phone">
 						</div>
-						<button type="submit" class="btn btn-lg btn-success" ng-click="createTodo()">Въведи</button>
-						
+
+						<!-- createToDo() WILL CREATE NEW TODOS -->
+						<button type="submit" class="btn  btn-lg btn-success" ng-click="createReg()">Записвай!!</button>
 					</form>
-				
 				</div>
 			</div>
+
 		</div>
 	</body>
 </html>
