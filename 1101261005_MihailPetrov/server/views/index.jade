@@ -1,0 +1,18 @@
+doctype html
+html
+	head
+		title Sample Jade Page
+		link(rel="stylesheet", href="style/style.css")
+		link(rel="stylesheet", href="style/grid.css")
+	body
+		div(id="app", class="grid-6-auto")
+			div(class="row")
+				div(id="contact-view", class="coll span-3")
+				div(id="address-view", class="coll span-3")
+					form(method="POST", id="form-view")
+						input(type="text", id="contact-name", placeholder="User Name")
+						input(type="email", id="contact-email", placeholder="User Email")
+						input(type="submit", id="contact-send", value="Add Contact", class="button")
+
+		//- Require JS AMD Manager
+		script(data-main="main", type="text/javascript", src="vendors/require.js")
